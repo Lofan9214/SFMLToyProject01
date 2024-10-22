@@ -4,7 +4,7 @@
 template<typename T>
 class ResourceMgr : public Singleton<ResourceMgr<T>>
 {
-	friend Singleton<ResourceMgr<T>>
+	friend Singleton<ResourceMgr<T>>;
 
 protected:
 	std::unordered_map<std::string, T*> resources;
@@ -58,7 +58,7 @@ public:
 			return false;
 		}
 		delete it->second;
-		resource.erase(it);
+		resources.erase(it);
 		return true;
 	}
 
