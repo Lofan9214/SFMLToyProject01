@@ -31,9 +31,8 @@ sf::Vector2f Utilities::setOrigin(sf::Drawable& obj, Origins preset)
 	return v2fOrigin;
 }
 
-//int Utilities::calcCollide(std::list<GameObject*>& listGo)
-//{
-//
-//	return 0;
-//}
+int Utilities::calcCollide(std::list<GameObject*>& listGo)
+{
+	return 0;
+}
 
