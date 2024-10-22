@@ -8,46 +8,46 @@ SceneDev1::SceneDev1()
 {
 }
 
-void SceneDev1::Init()
+void SceneDev1::init()
 {
 	std::cout << "SceneDev1::Init()" << std::endl;
 
 	GameObject* obj = AddGo(new SpriteGo("graphics/background.png"));
-	obj->SetOrigin(Origins::MC);
-	obj->SetPosition({ 1920 / 2, 1080 / 2 });
-	Scene::Init();
+	obj->setOrigin(Origins::MC);
+	obj->setPosition({ 1920 / 2, 1080 / 2 });
+	Scene::init();
 }
 
-void SceneDev1::Enter()
+void SceneDev1::enter()
 {
 	std::cout << "SceneDev1::Enter()" << std::endl;
 
-	ResourceMgr<sf::Text>::Instance().Load("graphics/background.png");
+	ResourceMgr<sf::Text>::Instance().load("graphics/background.png");
 
-	Scene::Enter();
+	Scene::enter();
 }
 
-void SceneDev1::Exit()
+void SceneDev1::exit()
 {
 	std::cout << "SceneDev1::Enter()" << std::endl;
 
-	Scene::Exit();
+	Scene::exit();
 
-	ResourceMgr<sf::Text>::Instance().Load("graphics/background.png");
+	ResourceMgr<sf::Text>::Instance().load("graphics/background.png");
 
 }
 
-void SceneDev1::Update(float dt)
+void SceneDev1::update(float dt)
 {
-	Scene::Update(dt);
+	Scene::update(dt);
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
-		SceneMgr::Instance().ChangeScene(SceneIds::Dev2);
+		SceneMgr::Instance().changeScene(SceneIds::Dev2);
 	}
 }
 
-void SceneDev1::Draw(sf::RenderWindow& window)
+void SceneDev1::draw(sf::RenderWindow& window)
 {
-	Scene::Draw(window);
+	Scene::draw(window);
 }

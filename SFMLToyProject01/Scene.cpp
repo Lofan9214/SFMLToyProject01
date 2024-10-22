@@ -6,7 +6,7 @@ Scene::Scene(SceneIds id)
 {
 }
 
-void Scene::Init()
+void Scene::init()
 {
 	for (auto obj : gameObjects)
 	{
@@ -24,19 +24,19 @@ void Scene::Release()
 	gameObjects.clear();
 }
 
-void Scene::Enter()
+void Scene::enter()
 {
 	for (auto obj : gameObjects)
 	{
-		obj->Reset();
+		obj->reset();
 	}
 }
 
-void Scene::Exit()
+void Scene::exit()
 {
 }
 
-void Scene::Update(float dt)
+void Scene::update(float dt)
 {
 	for (auto obj : gameObjects)
 	{
@@ -48,7 +48,7 @@ void Scene::Update(float dt)
 	}
 }
 
-void Scene::Draw(sf::RenderWindow& window)
+void Scene::draw(sf::RenderWindow& window)
 {
 	for (auto obj : gameObjects)
 	{
@@ -56,7 +56,7 @@ void Scene::Draw(sf::RenderWindow& window)
 		{
 			continue;
 		}
-		obj->Draw(window);
+		obj->draw(window);
 	}
 }
 

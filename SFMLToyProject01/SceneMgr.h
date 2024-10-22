@@ -7,7 +7,7 @@ class SceneMgr : public Singleton<SceneMgr>
 	friend class Singleton<SceneMgr>;
 	
 protected:
-	std::vector<Scene*> scenes;
+	std::vector<Scene*> vecScenes;
 
 	SceneIds startScene = SceneIds::Dev1;
 	SceneIds currentScene;
@@ -19,13 +19,13 @@ protected:
 	SceneMgr& operator=(const SceneMgr&) = delete;
 
 public:
-	void Init();
-	void RElease();
+	void init();
+	void release();
 
-	SceneIds GetCurrentScene() const { return currentScene; }
-	void ChangeScene(SceneIds id);
+	SceneIds getCurrentScene() const { return currentScene; }
+	void changeScene(SceneIds id);
 
-	void Update(float dt);
-	void Draw(sf::RenderWindow& window);
+	void update(float dt);
+	void draw(sf::RenderWindow& window);
 };
 

@@ -7,12 +7,12 @@ class ResourceMgr : public Singleton<ResourceMgr<T>>
 	friend Singleton<ResourceMgr<T>>;
 
 protected:
-	std::unordered_map<std::string, T*> resources;
+	std::unordered_map<std::string, T*> uomapResource;
 
 	ResourceMgr() = default;
 	~ResourceMgr()
 	{
-		UnloadAll();
+		unloadAll();
 	}
 
 	ResourceMgr(const ResourceMgr&) = delete;
@@ -21,18 +21,18 @@ protected:
 public:
 	static T Empty;
 
-	void UnloadAll()
+	void unloadAll()
 	{
-		for (const auto& pair : resources)
+		for (const auto& pair : uomapResource)
 		{
 			delete pair.second;
 		}
-		resources.clear();
+		uomapResource.clear();
 	}
 
-	bool Load(const std::string& id)
+	bool load(const std::string& id)
 	{
-		if (resources.find(id) != resources.end())
+		if (uomapResource.find(id) != uomapResource.end())
 		{
 			return false;
 		}
@@ -41,7 +41,7 @@ public:
 		bool success = resource->loadFromFile(id);
 		if (success)
 		{
-			resources.insert({ id, resource });
+			uomapResource.insert({ id, resource });
 		}
 		else
 		{
@@ -50,22 +50,22 @@ public:
 		return success;
 	}
 
-	bool Unload(const std::string& id)
+	bool unload(const std::string& id)
 	{
-		auto it = resources.find(id);
-		if (it == resources.end())
+		auto it = uomapResource.find(id);
+		if (it == uomapResource.end())
 		{
 			return false;
 		}
 		delete it->second;
-		resources.erase(it);
+		uomapResource.erase(it);
 		return true;
 	}
 
-	T& Get(const std::string& id)
+	T& get(const std::string& id)
 	{
-		auto it = resources.find(id);
-		if (it == resources.end())
+		auto it = uomapResource.find(id);
+		if (it == uomapResource.end())
 		{
 			return Empty;
 		}

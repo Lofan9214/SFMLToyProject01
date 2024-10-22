@@ -6,33 +6,33 @@ SpriteGo::SpriteGo(const std::string& texId, const std::string& name)
 {
 }
 
-void SpriteGo::SetOrigin(Origins preset)
+void SpriteGo::setOrigin(Origins preset)
 {
 	originPreset = preset;
-	origin = Utils::SetOrigin(sprite, originPreset);
+	origin = Utilities::setOrigin(sprite, originPreset);
 }
 
-void SpriteGo::SetOrigin(const sf::Vector2f& newOrigin)
+void SpriteGo::setOrigin(const sf::Vector2f& newOrigin)
 {
 	originPreset = Origins::Custom;
 	origin = newOrigin;
 	sprite.setOrigin(origin);
 }
 
-void SpriteGo::Reset()
+void SpriteGo::reset()
 {
-	sprite.setTexture(ResourceMgr<sf::Texture>::Instance().Get(textureId));
-	SetOrigin(originPreset);
+	sprite.setTexture(ResourceMgr<sf::Texture>::Instance().get(textureId));
+	setOrigin(originPreset);
 }
 
-void SpriteGo::SetPosition(const sf::Vector2f& pos)
+void SpriteGo::setPosition(const sf::Vector2f& pos)
 {
-	GameObject::SetPosition(pos);
+	GameObject::setPosition(pos);
 	sprite.setPosition(pos);
 }
 
-void SpriteGo::Draw(sf::RenderWindow& window)
+void SpriteGo::draw(sf::RenderWindow& window)
 {
-	GameObject::Draw(window);
+	GameObject::draw(window);
 	window.draw(sprite);
 }

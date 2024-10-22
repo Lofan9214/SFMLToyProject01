@@ -5,7 +5,7 @@ GameObject::GameObject(const std::string& name)
 {
 }
 
-void GameObject::SetOrigin(Origins preset)
+void GameObject::setOrigin(Origins preset)
 {
 	originPreset = preset;
 	origin = { 0.f, 0.f };
@@ -19,7 +19,7 @@ void GameObject::Release()
 {
 }
 
-void GameObject::Reset()
+void GameObject::reset()
 {
 }
 
@@ -27,6 +27,6 @@ void GameObject::Update(float dt)
 {
 }
 
-void GameObject::Draw(sf::RenderWindow& window)
+void GameObject::draw(sf::RenderWindow& window)
 {
 }

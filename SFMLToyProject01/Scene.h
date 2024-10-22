@@ -9,14 +9,14 @@ public:
 	Scene(SceneIds id);
 	virtual ~Scene() = default;
 
-	virtual void Init();
+	virtual void init();
 	virtual void Release();
 
-	virtual void Enter();
-	virtual void Exit();
+	virtual void enter();
+	virtual void exit();
 	
-	virtual void Update(float dt);
-	virtual void Draw(sf::RenderWindow& window);
+	virtual void update(float dt);
+	virtual void draw(sf::RenderWindow& window);
 	
 	virtual GameObject* AddGo(GameObject* obj);
 	virtual void RemoveGo(GameObject* obj);

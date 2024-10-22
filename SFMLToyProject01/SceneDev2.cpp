@@ -7,44 +7,44 @@ SceneDev2::SceneDev2()
 {
 }
 
-void SceneDev2::Init()
+void SceneDev2::init()
 {
 	std::cout << "SceneDev2::Init()" << std::endl;
 
 	AddGo(new SpriteGo("graphics/player.png"));
 
-	Scene::Init();
+	Scene::init();
 }
 
-void SceneDev2::Enter()
+void SceneDev2::enter()
 {
 	std::cout << "SceneDev2::Enter()" << std::endl;
 	
-	ResourceMgr<sf::Text>::Instance().Load("graphics/player.png");
+	ResourceMgr<sf::Text>::Instance().load("graphics/player.png");
 
-	Scene::Enter();
+	Scene::enter();
 }
 
-void SceneDev2::Exit()
+void SceneDev2::exit()
 {
 	std::cout << "SceneDev1::Enter()" << std::endl;
 
-	Scene::Exit();
+	Scene::exit();
 
-	ResourceMgr<sf::Text>::Instance().Load("graphics/background.png");
+	ResourceMgr<sf::Text>::Instance().load("graphics/background.png");
 }
 
-void SceneDev2::Update(float dt)
+void SceneDev2::update(float dt)
 {
-	Scene::Update(dt);
+	Scene::update(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::isKeyDown(sf::Keyboard::Space))
 	{
-		SceneMgr::Instance().ChangeScene(SceneIds::Dev2);
+		SceneMgr::Instance().changeScene(SceneIds::Dev2);
 	}
 }
 
-void SceneDev2::Draw(sf::RenderWindow& window)
+void SceneDev2::draw(sf::RenderWindow& window)
 {
-	Scene::Draw(window);
+	Scene::draw(window);
 }

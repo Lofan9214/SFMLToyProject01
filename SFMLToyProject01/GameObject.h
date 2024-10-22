@@ -20,11 +20,11 @@ public:
 	void SetActive(bool a) { active = a; }
 
 	sf::Vector2f GetPosition() const { return position; }
-	virtual void SetPosition(const sf::Vector2f& pos) { position = pos; }
+	virtual void setPosition(const sf::Vector2f& pos) { position = pos; }
 
 	sf::Vector2f GetOrigin() const { return origin; }
-	virtual void SetOrigin(Origins preset);
-	virtual void SetOrigin(const sf::Vector2f& newOrigin)
+	virtual void setOrigin(Origins preset);
+	virtual void setOrigin(const sf::Vector2f& newOrigin)
 	{
 		origin = newOrigin;
 		originPreset = Origins::Custom;
@@ -33,9 +33,9 @@ public:
 	virtual void Init();
 	virtual void Release();
 
-	virtual void Reset();
+	virtual void reset();
 
 	virtual void Update(float dt);
-	virtual void Draw(sf::RenderWindow& window);
+	virtual void draw(sf::RenderWindow& window);
 };
 

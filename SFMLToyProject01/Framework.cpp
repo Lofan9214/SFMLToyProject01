@@ -5,7 +5,7 @@ void Framework::init(int iWidth, int iHeight, const std::string& name)
 {
 	window.create(sf::VideoMode(iWidth, iHeight), name);
 
-	SceneMgr::Instance().Init();
+	SceneMgr::Instance().init();
 }
 
 void Framework::doThis()
@@ -42,7 +42,7 @@ void Framework::doThis()
 
 #pragma region 업데이트
 
-		SceneMgr::Instance().Update(fGameDeltaTime);
+		SceneMgr::Instance().update(fGameDeltaTime);
 
 #pragma endregion 업데이트
 
@@ -50,7 +50,7 @@ void Framework::doThis()
 
 		window.clear();
 
-		SceneMgr::Instance().Draw(window);
+		SceneMgr::Instance().draw(window);
 		
 		window.display();
 
@@ -60,5 +60,5 @@ void Framework::doThis()
 
 void Framework::release()
 {
-	SceneMgr::Instance().RElease();
+	SceneMgr::Instance().release();
 }

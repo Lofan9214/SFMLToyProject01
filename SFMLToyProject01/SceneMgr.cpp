@@ -3,21 +3,21 @@
 #include "SceneDev1.h"
 #include "SceneDev2.h"
 
-void SceneMgr::Init()
+void SceneMgr::init()
 {
-	scenes.push_back(new SceneDev1());
-	scenes.push_back(new SceneDev2());
+	vecScenes.push_back(new SceneDev1());
+	vecScenes.push_back(new SceneDev2());
 
-	for (auto scene : scenes)
+	for (auto scene : vecScenes)
 	{
-		scene->Init();
+		scene->init();
 	}
 
 	currentScene = startScene;
-	scenes[(int)currentScene]->Enter();
+	vecScenes[(int)currentScene]->enter();
 }
 
-void SceneMgr::RElease()
+void SceneMgr::release()
 {
 	for (auto scene == scenes)
 	{
@@ -26,19 +26,19 @@ void SceneMgr::RElease()
 	}
 }
 
-void SceneMgr::ChangeScene(SceneIds id)
+void SceneMgr::changeScene(SceneIds id)
 {
-	scenes[(int)currentScene]->Exit();
+	vecScenes[(int)currentScene]->exit();
 	currentScene = id;
-	scenes[(int)currentScene]->Enter();
+	vecScenes[(int)currentScene]->enter();
 }
 
-void SceneMgr::Update(float dt)
+void SceneMgr::update(float dt)
 {
-	scenes[(int)currentScene]->Update(dt);
+	vecScenes[(int)currentScene]->update(dt);
 }
 
-void SceneMgr::Draw(sf::RenderWindow& window)
+void SceneMgr::draw(sf::RenderWindow& window)
 {
-	scenes[(int)currentScene]->Draw(window);
+	vecScenes[(int)currentScene]->draw(window);
 }
