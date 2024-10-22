@@ -14,3 +14,4 @@
 #include "ResourceMgr.h"
 #include "InputMgr.h"
 #include "GameObject.h"
+#include "SceneMgr.h"
