@@ -145,24 +145,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BulletGo.cpp" />
+    <ClCompile Include="DuckGo.cpp" />
+    <ClCompile Include="Framework.cpp" />
     <ClCompile Include="InputMgr.cpp" />
-	<ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PlayerGo.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneDev1.cpp" />
+    <ClCompile Include="SceneDev2.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="SpriteGo.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BulletGo.h" />
+    <ClInclude Include="DuckGo.h" />
+    <ClInclude Include="Framework.h" />
     <ClInclude Include="InputMgr.h" />
-	<ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="PlayerGo.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneDev1.h" />
+    <ClInclude Include="SceneDev2.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SpriteGo.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Defines.h" /> 
+    <ClInclude Include="Defines.h" />
+    <ClInclude Include="TextGo.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
