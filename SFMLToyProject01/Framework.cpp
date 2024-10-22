@@ -14,7 +14,7 @@ void Framework::doThis()
 	sf::Event ev;
 	while (window.isOpen())
 	{
-#pragma region 시간 간격
+#pragma region 시간 간격 업데이트
 
 		dt = clkClock.restart();
 		fRealDeltaTime = dt.asSeconds();
@@ -24,7 +24,7 @@ void Framework::doThis()
 		fRealTime += fRealDeltaTime;
 		fGameTime += fGameDeltaTime;
 
-#pragma endregion 시간 간격
+#pragma endregion 시간 간격 업데이트
 
 #pragma region 이벤트 루프
 
@@ -56,7 +56,6 @@ void Framework::doThis()
 
 #pragma endregion 드로우
 	}
-
 }
 
 void Framework::release()

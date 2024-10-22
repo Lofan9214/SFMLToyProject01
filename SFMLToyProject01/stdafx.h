@@ -10,9 +10,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "Defines.h"
+#include "Utilities.h"
 #include "Singleton.h"
 #include "Framework.h"
-#include "ResourceMgr.h"
 #include "InputMgr.h"
+#include "ResourceMgr.h"
 #include "GameObject.h"
 #include "SceneMgr.h"
