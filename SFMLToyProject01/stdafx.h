@@ -7,3 +7,6 @@
 #include <algorithm>
 
 #include <SFML/Graphics.hpp>
+
+#include "Singleton.h"
+#include "ResourceMgr.h"
