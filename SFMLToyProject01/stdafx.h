@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <bitset>
 #include <list>
 #include <unordered_map>
 #include <vector>
@@ -10,3 +11,4 @@
 
 #include "Singleton.h"
 #include "ResourceMgr.h"
+#include "InputMgr.h"
