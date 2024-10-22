@@ -17,3 +17,4 @@
 #include "ResourceMgr.h"
 #include "GameObject.h"
 #include "SceneMgr.h"
+#include "SpriteGo.h"

@@ -40,7 +40,7 @@ void Scene::update(float dt)
 {
 	for (auto obj : gameObjects)
 	{
-		if (!obj->IsActive())
+		if (!obj->isActive())
 		{
 			continue;
 		}
@@ -52,7 +52,7 @@ void Scene::draw(sf::RenderWindow& window)
 {
 	for (auto obj : gameObjects)
 	{
-		if (!obj->IsActive())
+		if (!obj->isActive())
 		{
 			continue;
 		}
@@ -78,7 +78,7 @@ GameObject* Scene::FindGo(const std::string& name)
 {
 	for (auto obj : gameObjects)
 	{
-		if (obj->GetName() == name)
+		if (obj->getName() == name)
 		{
 			return obj;
 		}
