@@ -11,11 +11,11 @@ void GameObject::setOrigin(Origins preset)
 	origin = { 0.f, 0.f };
 }
 
-void GameObject::Init()
+void GameObject::init()
 {
 }
 
-void GameObject::Release()
+void GameObject::release()
 {
 }
 
@@ -23,7 +23,7 @@ void GameObject::reset()
 {
 }
 
-void GameObject::Update(float dt)
+void GameObject::update(float dt)
 {
 }
 

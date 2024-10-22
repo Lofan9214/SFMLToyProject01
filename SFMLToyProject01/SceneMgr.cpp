@@ -19,7 +19,7 @@ void SceneMgr::init()
 
 void SceneMgr::release()
 {
-	for (auto scene == scenes)
+	for (auto scene : vecScenes)
 	{
 		scene->Release();
 		delete scene;

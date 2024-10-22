@@ -13,16 +13,16 @@ public:
 	GameObject(const std::string& name = "");
 	virtual ~GameObject() = default;
 
-	const std::string& GetName() const { return name; }
-	void SetName(const std::string& n) { name = n; }
+	const std::string& getName() const { return name; }
+	void setName(const std::string& n) { name = n; }
 
-	bool IsActive() const { return active; }
-	void SetActive(bool a) { active = a; }
+	bool isActive() const { return active; }
+	void setActive(bool a) { active = a; }
 
-	sf::Vector2f GetPosition() const { return position; }
+	sf::Vector2f getPosition() const { return position; }
 	virtual void setPosition(const sf::Vector2f& pos) { position = pos; }
 
-	sf::Vector2f GetOrigin() const { return origin; }
+	sf::Vector2f getOrigin() const { return origin; }
 	virtual void setOrigin(Origins preset);
 	virtual void setOrigin(const sf::Vector2f& newOrigin)
 	{
@@ -30,12 +30,12 @@ public:
 		originPreset = Origins::Custom;
 	}
 
-	virtual void Init();
-	virtual void Release();
+	virtual void init();
+	virtual void release();
 
 	virtual void reset();
 
-	virtual void Update(float dt);
+	virtual void update(float dt);
 	virtual void draw(sf::RenderWindow& window);
 };
 

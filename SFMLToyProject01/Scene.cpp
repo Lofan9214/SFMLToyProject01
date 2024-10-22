@@ -10,7 +10,7 @@ void Scene::init()
 {
 	for (auto obj : gameObjects)
 	{
-		obj->Init();
+		obj->init();
 	}
 }
 
@@ -18,7 +18,7 @@ void Scene::Release()
 {
 	for (auto obj : gameObjects)
 	{
-		obj->Release();
+		obj->release();
 		delete obj;
 	}
 	gameObjects.clear();
@@ -44,7 +44,7 @@ void Scene::update(float dt)
 		{
 			continue;
 		}
-		obj->Update(dt);
+		obj->update(dt);
 	}
 }
 

@@ -5,7 +5,7 @@ protected:
 	sf::Sprite gun;
 	std::string guntextureid;
 	std::string bullettexturid;
-	std::vector<BulletGo> bullets;
+	//std::vector<BulletGo> bullets;
 
 public:
 	PlayerGo();
