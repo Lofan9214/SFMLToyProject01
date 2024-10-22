@@ -43,6 +43,9 @@
     <ClCompile Include="DuckGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">

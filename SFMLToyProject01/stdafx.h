@@ -11,6 +11,7 @@
 
 #include "Defines.h"
 #include "Singleton.h"
+#include "Framework.h"
 #include "ResourceMgr.h"
 #include "InputMgr.h"
 #include "GameObject.h"
