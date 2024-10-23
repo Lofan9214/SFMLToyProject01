@@ -49,5 +49,6 @@ int BulletGo::hit()
 	active = false;
 	position.x = -1000;
 	position.y = -1000;
+	sprite.setPosition(position);
 	return 0;
 }
