@@ -5,9 +5,12 @@ protected:
 	const SceneIds id;
 	std::list<GameObject*> gameObjects;
 
+	Scene(const Scene&) = delete;
+	Scene& operator=(const Scene&) = delete;
 public:
 	Scene(SceneIds id);
 	virtual ~Scene() = default;
+
 
 	virtual void init();
 	virtual void Release();

@@ -40,7 +40,7 @@ void SceneDev2::update(float dt)
 
 	if (InputMgr::isKeyDown(sf::Keyboard::Space))
 	{
-		SceneMgr::Instance().changeScene(SceneIds::Dev2);
+		SceneMgr::Instance().changeScene(SceneIds::Dev1);
 	}
 }
 
