@@ -22,7 +22,7 @@ void SceneDev1::enter()
 {
 	std::cout << "SceneDev1::Enter()" << std::endl;
 
-	ResourceMgr<sf::Text>::Instance().load("graphics/background.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/background.png");
 
 	Scene::enter();
 }
@@ -33,7 +33,7 @@ void SceneDev1::exit()
 
 	Scene::exit();
 
-	ResourceMgr<sf::Text>::Instance().load("graphics/background.png");
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/background.png");
 
 }
 

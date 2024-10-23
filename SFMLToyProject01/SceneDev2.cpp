@@ -20,7 +20,7 @@ void SceneDev2::enter()
 {
 	std::cout << "SceneDev2::Enter()" << std::endl;
 	
-	ResourceMgr<sf::Text>::Instance().load("graphics/player.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/player.png");
 
 	Scene::enter();
 }
@@ -31,7 +31,7 @@ void SceneDev2::exit()
 
 	Scene::exit();
 
-	ResourceMgr<sf::Text>::Instance().load("graphics/background.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/background.png");
 }
 
 void SceneDev2::update(float dt)
