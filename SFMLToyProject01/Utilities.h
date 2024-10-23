@@ -13,4 +13,15 @@ public:
 
 #pragma endregion 충돌 체크
 
+#pragma region 랜덤 함수
+	static int randInt(int start, int end);
+	static float randFloat(float start, float end);
+#pragma endregion 랜덤 함수
+
+#pragma region 각도 관련
+	static const float pi;
+	static float rad2deg(const float rad);
+	static float deg2rad(const float deg);
+	static float absrad(const float rad);
+#pragma endregion 각도 관련
 };

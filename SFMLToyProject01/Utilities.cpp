@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+const float Utilities::pi = acosf(-1);
+
 sf::Vector2f Utilities::setOrigin(sf::Drawable& obj, Origins preset)
 {
 	sf::Sprite* spritePtr = dynamic_cast<sf::Sprite*>(&obj);
@@ -34,5 +36,43 @@ sf::Vector2f Utilities::setOrigin(sf::Drawable& obj, Origins preset)
 int Utilities::calcCollide(std::list<GameObject*>& listGo)
 {
 	return 0;
+}
+
+int Utilities::randInt(int start, int end)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(start, end);
+
+	return dis(gen);
+}
+
+float Utilities::randFloat(float start, float end)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(start, end);
+
+	return dis(gen);
+}
+
+float Utilities::rad2deg(const float rad)
+{
+	return rad * 180 / pi;
+}
+
+float Utilities::deg2rad(const float deg)
+{
+	return deg * pi / 180;
+}
+
+float Utilities::absrad(const float rad)
+{
+	float newrad = rad;
+	while (newrad < 0.f)
+	{
+		newrad += 2 * pi;
+	}
+	return newrad;
 }
 
