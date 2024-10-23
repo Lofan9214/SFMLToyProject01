@@ -12,6 +12,7 @@ void PlayerGo::init()
 
 void PlayerGo::reset()
 {
+	SpriteGo::reset();
 }
 
 void PlayerGo::update(float dt)

@@ -11,13 +11,14 @@ public:
 	SpriteGo(const std::string& texId, const std::string& name = "");
 	~SpriteGo() = default;
 
-
-	void setOrigin(Origins preset);
-	void setOrigin(const sf::Vector2f& newOrigin);
-	
-	
-	void reset() override;
 	void setPosition(const sf::Vector2f& pos) override;
+	void setOrigin(Origins preset) override;
+	void setOrigin(const sf::Vector2f& newOrigin) override;
+	
+	void init() override;
+	void release() override;
+	void update(float dt) override;
+	void reset() override;
 	void draw(sf::RenderWindow& window) override;
 
 

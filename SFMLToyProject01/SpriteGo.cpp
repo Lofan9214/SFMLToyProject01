@@ -19,6 +19,22 @@ void SpriteGo::setOrigin(const sf::Vector2f& newOrigin)
 	sprite.setOrigin(origin);
 }
 
+void SpriteGo::init()
+{
+	GameObject::init();
+}
+
+void SpriteGo::release()
+{
+	GameObject::release();
+}
+
+void SpriteGo::update(float dt)
+{
+	sprite.setPosition(position);
+	GameObject::update(dt);
+}
+
 void SpriteGo::reset()
 {
 	sprite.setTexture(ResourceMgr<sf::Texture>::Instance().get(textureId));
