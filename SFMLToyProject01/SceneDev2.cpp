@@ -25,7 +25,7 @@ void SceneDev2::init()
 	}
 	for (int i = 0; i < 10; ++i)
 	{
-		obj = AddGo(new DuckGo("graphics/duck.png", "duck"));
+		obj = AddGo(new DuckGo("graphics/duckAll.png", "duck"));
 		obj->setOrigin(Origins::MC);
 	}
 
@@ -51,7 +51,7 @@ void SceneDev2::enter()
 		}
 	}
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Bullet.png");
-	ResourceMgr<sf::Texture>::Instance().load("graphics/duck.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/duckAll.png");
 	ResourceMgr<sf::Font>::Instance().load("fonts/KOMIKAP_.ttf");
 
 	Scene::enter();
@@ -66,7 +66,7 @@ void SceneDev2::exit()
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/background.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Head.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Bullet.png");
-	ResourceMgr<sf::Texture>::Instance().unload("graphics/duck.png");
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/duckAll.png");
 	ResourceMgr<sf::Font>::Instance().unload("fonts/KOMIKAP_.ttf");
 }
 

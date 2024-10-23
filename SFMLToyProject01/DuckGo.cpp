@@ -25,6 +25,33 @@ void DuckGo::update(float dt)
 	{
 		spawn(true);
 	}
+
+	wing += dt;
+	if (wing > 2)
+	{
+		sf::IntRect intrec = sprite.getTextureRect();
+		if (bAlive)
+		{
+			if (intrec.left > 0)
+			{
+				intrec.left = 0;
+			}
+			else
+			{
+				intrec.left += intrec.width;
+			}
+		}
+		else
+		{
+			active = false;
+			intrec.top = 0;
+			position.x = -1000.f;
+			sprite.setPosition(position);
+		}
+		sprite.setTextureRect(intrec);
+		wing = 0;
+	}
+
 	SpriteGo::update(dt);
 }
 
@@ -36,7 +63,10 @@ void DuckGo::draw(sf::RenderWindow& window)
 void DuckGo::reset()
 {
 	SpriteGo::reset();
+	sf::IntRect frame = sf::IntRect(0, 0, 140, 95);
+	sprite.setTextureRect(frame);
 	active = true;
+
 	spawn();
 }
 
@@ -73,9 +103,11 @@ void DuckGo::spawn(bool respawn)
 
 int DuckGo::hit()
 {
-	active = false;
 	bAlive = false;
-	position.x = -1000.f;
-	sprite.setPosition(position);
+	wing = 0;
+	sf::IntRect intrec = sprite.getTextureRect();
+	intrec.top += intrec.height;
+	intrec.left = 0;
+	sprite.setTextureRect(intrec);
 	return score;
 }

@@ -11,6 +11,8 @@ protected:
 	movingPattern pattern;
 	sf::Vector2f velocity;
 
+	float wing = 0;
+
 	bool bAlive = true;
 
 	DuckGo(const DuckGo&) = delete;
