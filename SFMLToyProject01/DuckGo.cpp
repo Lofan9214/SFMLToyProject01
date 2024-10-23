@@ -20,7 +20,7 @@ void DuckGo::update(float dt)
 {
 	position += velocity * dt;
 
-	
+
 
 	wing += dt;
 	if (wing > 0.5)
@@ -69,7 +69,7 @@ void DuckGo::reset()
 	sf::IntRect frame = sf::IntRect(0, 0, 140, 95);
 	sprite.setTextureRect(frame);
 	active = true;
-	wing = Utilities::randFloat(0.f,0.5f);
+	wing = Utilities::randFloat(0.f, 0.5f);
 
 	spawn();
 }
@@ -86,18 +86,18 @@ void DuckGo::spawn(bool respawn)
 	bAlive = true;
 	wing = Utilities::randFloat(0.f, 0.5f);
 	float angle;
-	float speed = Utilities::randFloat(400.f, 600.f);
+	float speed = difficulty + Utilities::randFloat(600.f, 800.f);
 	if (Utilities::randInt(0, 1) == 1)
 	{
 		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
 		position.x = -100;
-		sprite.setScale(-1, 1);
+		sprite.setScale(-0.8f, 0.8f);
 	}
 	else
 	{
 		angle = Utilities::randFloat(Utilities::pi * 0.97f, Utilities::pi * 1.03f);
 		position.x = 1920 + 100;
-		sprite.setScale(1, 1);
+		sprite.setScale(0.8f, 0.8f);
 	}
 	if (!respawn)
 	{

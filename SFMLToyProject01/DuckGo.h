@@ -1,5 +1,5 @@
 #pragma once
-class DuckGo 
+class DuckGo
 	: public SpriteGo
 {
 protected:
@@ -7,7 +7,8 @@ protected:
 	{
 		straight,
 	};
-	int score;
+	int score = 0;
+	int difficulty = 0;
 	movingPattern pattern;
 	sf::Vector2f velocity;
 
@@ -32,6 +33,8 @@ public:
 	void draw(sf::RenderWindow& window) override;
 
 	void spawn(bool respawn = false);
+
+	void setDifficulty(int dDif) { difficulty = dDif; }
 	int hit();
 };
 

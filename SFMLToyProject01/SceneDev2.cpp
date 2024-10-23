@@ -17,13 +17,13 @@ void SceneDev2::init()
 	std::cout << "SceneDev2::Init()" << std::endl;
 
 	AddGo(new SpriteGo("graphics/background.png"));
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 30; ++i)
 	{
 		obj = AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
 		obj->setOrigin(Origins::MC);
 	}
 	AddGo(new PlayerGo("graphics/Head.png", "player"));
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 7; ++i)
 	{
 		obj = AddGo(new DuckGo("graphics/duckAll.png", "duck"));
 		obj->setOrigin(Origins::MC);
@@ -95,11 +95,22 @@ void SceneDev2::update(float dt)
 	{
 		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
-			auto ptr = dynamic_cast<BulletGo*>(*it);
-			if (ptr != nullptr && ptr->isActive() == false)
+			auto plaptr = dynamic_cast<PlayerGo*>(*it);
+			if (plaptr != nullptr && plaptr->isActive() == true)
 			{
-
-				ptr->fire(Framework::Instance().getWindow(), { 1920 / 2, 1080 });
+				int bulcount = 0;
+				for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+				{
+					auto bulptr = dynamic_cast<BulletGo*> (*it2);
+					if (bulptr != nullptr && bulptr->isActive() == false)
+					{
+						bulptr->fire(Framework::Instance().getWindow(), plaptr->getPosition());
+						if (++bulcount > 2)
+						{
+							break;
+						}
+					}
+				}
 				break;
 			}
 		}
@@ -128,11 +139,11 @@ void SceneDev2::update(float dt)
 		auto txtptr = dynamic_cast<TextGo*>(*it);
 		if (txtptr != nullptr)
 		{
-			txtptr->setString("Score : "+std::to_string(score));
+			txtptr->setString("Score : " + std::to_string(score));
 		}
 	}
 
-	
+
 #pragma endregion 충돌 체크
 
 	Scene::update(dt);
