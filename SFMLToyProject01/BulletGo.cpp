@@ -13,6 +13,7 @@ void BulletGo::init()
 void BulletGo::update(float dt)
 {
 	position += Velocity * dt;
+	SpriteGo::update(dt);
 }
 
 void BulletGo::reset()

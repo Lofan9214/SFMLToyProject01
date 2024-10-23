@@ -7,7 +7,7 @@ protected:
 	bool active = true;
 
 	sf::Vector2f position;
-	Origins originPreset;
+	Origins originPreset = Origins::TL;
 	sf::Vector2f origin;
 public:
 	GameObject(const std::string& name = "");
