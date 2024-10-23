@@ -1,5 +1,5 @@
 #pragma once
-class PlayerGo : public GameObject
+class PlayerGo : public SpriteGo
 {
 protected:
 	sf::Sprite gun;
@@ -10,7 +10,7 @@ protected:
 public:
 	PlayerGo() = default;
 	virtual ~PlayerGo() = default;
-	PlayerGo(std::string playerid, std::string gunid, std::string bulletid, std::string name);
+	PlayerGo(std::string playerid, std::string name);
 
 	void init() override;
 	void reset() override;
