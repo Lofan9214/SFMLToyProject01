@@ -3,7 +3,7 @@ class TextGo
 	: public GameObject
 {
 protected:
-	sf::Text sftxtText;
+	sf::Text txtText;
 	std::string strFontId;
 
 	TextGo(const TextGo&) = delete;
@@ -22,6 +22,7 @@ public:
 	void setPosition(const sf::Vector2f& iPos) override;
 
 	void reset() override;
+	void draw(sf::RenderWindow& window) override;
 
 	void setString(const std::string& newText);
 };

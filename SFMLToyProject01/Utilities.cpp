@@ -33,7 +33,7 @@ sf::Vector2f Utilities::setOrigin(sf::Drawable& obj, Origins preset)
 	return v2fOrigin;
 }
 
-int Utilities::calcCollide(const sf::FloatRect& bullet, const sf::FloatRect& duck)
+bool Utilities::isColliding(const sf::FloatRect& bullet, const sf::FloatRect& duck)
 {
 	if (bullet.left < (duck.left + duck.width)
 		&& bullet.left + bullet.width > duck.left
@@ -44,8 +44,6 @@ int Utilities::calcCollide(const sf::FloatRect& bullet, const sf::FloatRect& duc
 		return true;
 	}
 	return false;
-
-	return bullet.intersects(duck);
 }
 
 int Utilities::randInt(int start, int end)

@@ -4,6 +4,7 @@
 #include "PlayerGo.h"
 #include "BulletGo.h"
 #include "DuckGo.h"
+#include "TextGo.h"
 
 SceneDev2::SceneDev2()
 	: Scene(SceneIds::Dev2)
@@ -27,6 +28,10 @@ void SceneDev2::init()
 		obj = AddGo(new DuckGo("graphics/duck.png", "duck"));
 		obj->setOrigin(Origins::MC);
 	}
+
+	obj = AddGo(new TextGo("fonts/KOMIKAP_.ttf", "Scoreboard"));
+	obj->setPosition({ 10.f, 10.f });
+
 	Scene::init();
 }
 
@@ -47,6 +52,7 @@ void SceneDev2::enter()
 	}
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Bullet.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/duck.png");
+	ResourceMgr<sf::Font>::Instance().load("fonts/KOMIKAP_.ttf");
 
 	Scene::enter();
 }
@@ -61,12 +67,11 @@ void SceneDev2::exit()
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Head.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Bullet.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/duck.png");
+	ResourceMgr<sf::Font>::Instance().unload("fonts/KOMIKAP_.ttf");
 }
 
 void SceneDev2::update(float dt)
 {
-	Scene::update(dt);
-
 	respawntime += dt;
 
 	if (respawntime > 5.f)
@@ -75,7 +80,7 @@ void SceneDev2::update(float dt)
 		for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
 		{
 			auto ptr2 = dynamic_cast<DuckGo*> (*it2);
-			if (ptr2 != nullptr && ptr2->isActive() == false)
+			if (ptr2 != nullptr && ptr2->isAlive() == false)
 			{
 				ptr2->spawn(true);
 			}
@@ -99,28 +104,37 @@ void SceneDev2::update(float dt)
 			}
 		}
 	}
+
+#pragma region 面倒 眉农
 	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
-		auto ptr = dynamic_cast<BulletGo*>(*it);
-		if (ptr != nullptr && ptr->isActive() == true)
+		auto bulptr = dynamic_cast<BulletGo*>(*it);
+		if (bulptr != nullptr && bulptr->isActive() == true)
 		{
 			for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
 			{
-				auto ptr2 = dynamic_cast<DuckGo*> (*it2);
-				if (ptr2 != nullptr && ptr2->isActive() == true)
+				auto ducptr = dynamic_cast<DuckGo*> (*it2);
+				if (ducptr != nullptr && ducptr->isAlive() == true)
 				{
-					if (Utilities::calcCollide(ptr->getRect(), ptr2->getRect()))
+					if (Utilities::isColliding(bulptr->getRect(), ducptr->getRect()))
 					{
-						ptr->hit();
-						ptr2->hit();
+						bulptr->hit();
+						score += ducptr->hit();
 					}
 				}
-
 			}
+		}
+		auto txtptr = dynamic_cast<TextGo*>(*it);
+		if (txtptr != nullptr)
+		{
+			txtptr->setString("Score : "+std::to_string(score));
 		}
 	}
 
+	
+#pragma endregion 面倒 眉农
 
+	Scene::update(dt);
 }
 
 void SceneDev2::draw(sf::RenderWindow& window)
