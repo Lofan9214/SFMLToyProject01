@@ -9,7 +9,7 @@ public:
 #pragma endregion 오리진 관련
 
 #pragma region 충돌 체크
-	static int calcCollide(const sf::FloatRect& bullet,const sf::FloatRect& duck);
+	static bool isColliding(const sf::FloatRect& bullet,const sf::FloatRect& duck);
 
 #pragma endregion 충돌 체크
 

@@ -6,6 +6,11 @@ DuckGo::DuckGo(std::string texId, std::string name)
 {
 }
 
+bool DuckGo::isAlive() const
+{
+	return bAlive;
+}
+
 void DuckGo::init()
 {
 	spawn();
@@ -18,7 +23,7 @@ void DuckGo::update(float dt)
 	if (position.x < (-200) || position.x>(Framework::Instance().getWindow().getSize().x + 200)
 		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
 	{
-		spawn();
+		spawn(true);
 	}
 	SpriteGo::update(dt);
 }
@@ -44,16 +49,17 @@ void DuckGo::spawn(bool respawn)
 {
 	score = 10;
 	active = true;
+	bAlive = true;
 	float angle;
-	float speed = Utilities::randFloat(200.f, 300.f);
+	float speed = Utilities::randFloat(400.f, 600.f);
 	if (Utilities::randInt(0, 1) == 1)
 	{
-		angle = Utilities::randFloat(-Utilities::pi * 0.05f, Utilities::pi * 0.05f);
+		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
 		position.x = -100;
 	}
 	else
 	{
-		angle = Utilities::randFloat(Utilities::pi * 0.95f, Utilities::pi * 1.05f);
+		angle = Utilities::randFloat(Utilities::pi * 0.97f, Utilities::pi * 1.03f);
 		position.x = 1920 + 100;
 	}
 	if (!respawn)
@@ -68,6 +74,8 @@ void DuckGo::spawn(bool respawn)
 int DuckGo::hit()
 {
 	active = false;
+	bAlive = false;
 	position.x = -1000.f;
+	sprite.setPosition(position);
 	return score;
 }

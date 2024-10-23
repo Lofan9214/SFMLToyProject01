@@ -11,6 +11,8 @@ protected:
 	movingPattern pattern;
 	sf::Vector2f velocity;
 
+	bool bAlive = true;
+
 	DuckGo(const DuckGo&) = delete;
 	DuckGo& operator=(const DuckGo&) = delete;
 
@@ -18,6 +20,8 @@ public:
 	DuckGo() = default;
 	virtual ~DuckGo() = default;
 	DuckGo(std::string texId, std::string name);
+
+	bool isAlive() const;
 
 	void init() override;
 	void reset() override;
