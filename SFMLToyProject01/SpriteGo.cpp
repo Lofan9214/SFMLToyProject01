@@ -19,6 +19,11 @@ void SpriteGo::setOrigin(const sf::Vector2f& newOrigin)
 	sprite.setOrigin(origin);
 }
 
+sf::FloatRect SpriteGo::getRect()
+{
+	return sprite.getGlobalBounds();
+}
+
 void SpriteGo::init()
 {
 	GameObject::init();

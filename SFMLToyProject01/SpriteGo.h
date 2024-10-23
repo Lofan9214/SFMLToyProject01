@@ -15,6 +15,9 @@ public:
 	void setOrigin(Origins preset) override;
 	void setOrigin(const sf::Vector2f& newOrigin) override;
 	
+
+	sf::FloatRect getRect();
+
 	void init() override;
 	void release() override;
 	void update(float dt) override;

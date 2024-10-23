@@ -11,7 +11,7 @@ public:
 	BulletGo(std::string texid, std::string name);
 
 	
-
+	
 	void init() override;
 	void update(float dt) override;
 	void reset() override;

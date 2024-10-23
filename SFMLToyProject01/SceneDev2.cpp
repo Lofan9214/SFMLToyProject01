@@ -3,6 +3,7 @@
 #include "SpriteGo.h"
 #include "PlayerGo.h"
 #include "BulletGo.h"
+#include "DuckGo.h"
 
 SceneDev2::SceneDev2()
 	: Scene(SceneIds::Dev2)
@@ -18,6 +19,10 @@ void SceneDev2::init()
 	for (int i = 0; i < 10; ++i)
 	{
 		AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
+	}
+	for (int i = 0; i < 5; ++i)
+	{
+		AddGo(new DuckGo("graphics/duck.png", "duck"));
 	}
 	Scene::init();
 }
@@ -38,6 +43,7 @@ void SceneDev2::enter()
 		}
 	}
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Bullet.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/duck.png");
 
 	Scene::enter();
 }
@@ -51,6 +57,7 @@ void SceneDev2::exit()
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/background.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Head.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Bullet.png");
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/duck.png");
 }
 
 void SceneDev2::update(float dt)
@@ -74,6 +81,24 @@ void SceneDev2::update(float dt)
 			}
 		}
 	}
+	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
+	{
+		auto ptr = dynamic_cast<BulletGo*>(*it);
+		if (ptr != nullptr && ptr->isActive() == true)
+		{
+			for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+			{
+				auto ptr2 = dynamic_cast<DuckGo*> (*it2);
+				if (ptr2 != nullptr && ptr2->isActive() == true)
+				{
+					Utilities::calcCollide(ptr->getRect(), ptr2->getRect());
+				}
+
+			}
+		}
+	}
+
+
 }
 
 void SceneDev2::draw(sf::RenderWindow& window)
