@@ -17,12 +17,12 @@ void SceneDev2::init()
 	std::cout << "SceneDev2::Init()" << std::endl;
 
 	AddGo(new SpriteGo("graphics/background.png"));
-	AddGo(new PlayerGo("graphics/Head.png", "player"));
 	for (int i = 0; i < 10; ++i)
 	{
 		obj = AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
 		obj->setOrigin(Origins::MC);
 	}
+	AddGo(new PlayerGo("graphics/Head.png", "player"));
 	for (int i = 0; i < 10; ++i)
 	{
 		obj = AddGo(new DuckGo("graphics/duckAll.png", "duck"));
@@ -80,7 +80,7 @@ void SceneDev2::update(float dt)
 		for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
 		{
 			auto ptr2 = dynamic_cast<DuckGo*> (*it2);
-			if (ptr2 != nullptr && ptr2->isAlive() == false)
+			if (ptr2 != nullptr && ptr2->isActive() == false)
 			{
 				ptr2->spawn(true);
 			}
@@ -120,6 +120,7 @@ void SceneDev2::update(float dt)
 					{
 						bulptr->hit();
 						score += ducptr->hit();
+						break;
 					}
 				}
 			}

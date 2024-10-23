@@ -20,14 +20,10 @@ void DuckGo::update(float dt)
 {
 	position += velocity * dt;
 
-	if (position.x < (-200) || position.x>(Framework::Instance().getWindow().getSize().x + 200)
-		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
-	{
-		spawn(true);
-	}
+	
 
 	wing += dt;
-	if (wing > 2)
+	if (wing > 0.5)
 	{
 		sf::IntRect intrec = sprite.getTextureRect();
 		if (bAlive)
@@ -52,6 +48,13 @@ void DuckGo::update(float dt)
 		wing = 0;
 	}
 
+	if ((position.x < (-200) || position.x>(Framework::Instance().getWindow().getSize().x + 200)
+		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
+		&& bAlive)
+	{
+		spawn(true);
+	}
+
 	SpriteGo::update(dt);
 }
 
@@ -66,6 +69,7 @@ void DuckGo::reset()
 	sf::IntRect frame = sf::IntRect(0, 0, 140, 95);
 	sprite.setTextureRect(frame);
 	active = true;
+	wing = Utilities::randFloat(0.f,0.5f);
 
 	spawn();
 }
@@ -80,17 +84,20 @@ void DuckGo::spawn(bool respawn)
 	score = 10;
 	active = true;
 	bAlive = true;
+	wing = Utilities::randFloat(0.f, 0.5f);
 	float angle;
 	float speed = Utilities::randFloat(400.f, 600.f);
 	if (Utilities::randInt(0, 1) == 1)
 	{
 		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
 		position.x = -100;
+		sprite.setScale(-1, 1);
 	}
 	else
 	{
 		angle = Utilities::randFloat(Utilities::pi * 0.97f, Utilities::pi * 1.03f);
 		position.x = 1920 + 100;
+		sprite.setScale(1, 1);
 	}
 	if (!respawn)
 	{
@@ -109,5 +116,8 @@ int DuckGo::hit()
 	intrec.top += intrec.height;
 	intrec.left = 0;
 	sprite.setTextureRect(intrec);
+	velocity.x = 0;
+	velocity.y = 300;
+
 	return score;
 }
