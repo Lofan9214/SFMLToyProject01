@@ -6,21 +6,21 @@ TextGo::TextGo(const std::string& iFontId, const std::string& iName)
 {
 }
 
-void TextGo::SetOrigin(Origins iPreset)
+void TextGo::setOrigin(Origins iPreset)
 {
 	originPreset = iPreset;
 	origin = Utilities::setOrigin(sftxtText,iPreset);
 }
 
-void TextGo::SetOrigin(const sf::Vector2f& iOrigin)
+void TextGo::setOrigin(const sf::Vector2f& iOrigin)
 {
 }
 
-void TextGo::SetPosition(const sf::Vector2f& iPos)
+void TextGo::setPosition(const sf::Vector2f& iPos)
 {
 }
 
-void TextGo::Reset()
+void TextGo::reset()
 {
 }
 
