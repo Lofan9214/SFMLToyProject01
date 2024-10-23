@@ -9,6 +9,8 @@ DuckGo::DuckGo(std::string texId, std::string name)
 void DuckGo::init()
 {
 	fly();
+	position.x = Utilities::randInt(100, 1800);
+	position.y = Utilities::randInt(100, 400);
 }
 
 void DuckGo::update(float dt)
@@ -31,6 +33,10 @@ void DuckGo::draw(sf::RenderWindow& window)
 void DuckGo::reset()
 {
 	SpriteGo::reset();
+	active = true;
+	fly();
+	position.x = Utilities::randInt(100, 1800);
+	position.y = Utilities::randInt(100, 400);
 }
 
 void DuckGo::release()
