@@ -33,7 +33,7 @@ sf::Vector2f Utilities::setOrigin(sf::Drawable& obj, Origins preset)
 	return v2fOrigin;
 }
 
-int Utilities::calcCollide(std::list<GameObject*>& listGo)
+int Utilities::calcCollide(const sf::FloatRect& bullet, const sf::FloatRect& duck)
 {
 	return 0;
 }

@@ -15,8 +15,8 @@ void DuckGo::update(float dt)
 {
 	position += velocity * dt;
 
-	if (position.x < (-200) || position.x>(1920 + 200)
-		|| position.y < (-200) || position.y>(1080 + 200))
+	if (position.x < (-200) || position.x>(Framework::Instance().getWindow().getSize().x + 200)
+		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
 	{
 		fly();
 	}
@@ -54,7 +54,7 @@ void DuckGo::fly()
 		angle = Utilities::randFloat(Utilities::pi * 0.95f, Utilities::pi * 1.05f);
 		position.x = 1920 + 100;
 	}
-	position.y = Utilities::randInt(100,400);
+	position.y = Utilities::randInt(100, 400);
 	velocity.x = speed * cosf(angle);
 	velocity.y = speed * sinf(angle);
 }
