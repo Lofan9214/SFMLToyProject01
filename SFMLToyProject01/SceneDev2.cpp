@@ -12,17 +12,20 @@ SceneDev2::SceneDev2()
 
 void SceneDev2::init()
 {
+	GameObject* obj;
 	std::cout << "SceneDev2::Init()" << std::endl;
 
 	AddGo(new SpriteGo("graphics/background.png"));
 	AddGo(new PlayerGo("graphics/Head.png", "player"));
 	for (int i = 0; i < 10; ++i)
 	{
-		AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
+		obj = AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
+		obj->setOrigin(Origins::MC);
 	}
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
-		AddGo(new DuckGo("graphics/duck.png", "duck"));
+		obj = AddGo(new DuckGo("graphics/duck.png", "duck"));
+		obj->setOrigin(Origins::MC);
 	}
 	Scene::init();
 }
@@ -39,7 +42,7 @@ void SceneDev2::enter()
 		if (ptr != nullptr)
 		{
 			ptr->setOrigin(Origins::BC);
-			ptr->setPosition({ 1920 / 2, 1080 /2 });
+			ptr->setPosition({ 1920 / 2, 1080 });
 		}
 	}
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Bullet.png");
@@ -93,6 +96,7 @@ void SceneDev2::update(float dt)
 				{
 					if (Utilities::calcCollide(ptr->getRect(), ptr2->getRect()))
 					{
+						ptr->hit();
 						ptr2->hit();
 					}
 				}

@@ -16,5 +16,7 @@ public:
 	void update(float dt) override;
 	void reset() override;
 	void fire(sf::RenderWindow& window, const sf::Vector2f& playerpos);
+
+	int hit();
 };
 

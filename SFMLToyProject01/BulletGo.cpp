@@ -43,3 +43,9 @@ void BulletGo::fire(sf::RenderWindow& window, const sf::Vector2f& playerpos)
 	position = playerpos;
 	active = true;
 }
+
+int BulletGo::hit()
+{
+	active = false;
+	return 0;
+}
