@@ -118,6 +118,7 @@ int DuckGo::hit()
 	sprite.setTextureRect(intrec);
 	velocity.x = 0;
 	velocity.y = 300;
+	
 
 	return score;
 }

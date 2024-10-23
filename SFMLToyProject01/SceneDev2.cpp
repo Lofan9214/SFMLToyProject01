@@ -54,6 +54,9 @@ void SceneDev2::enter()
 	ResourceMgr<sf::Texture>::Instance().load("graphics/duckAll.png");
 	ResourceMgr<sf::Font>::Instance().load("fonts/KOMIKAP_.ttf");
 
+	timebar.setFillColor(sf::Color::Red);
+	timebar.setSize({ Framework::Instance().getWindow().getSize().x+0.f , 10.f });
+
 	Scene::enter();
 }
 
@@ -73,7 +76,7 @@ void SceneDev2::exit()
 void SceneDev2::update(float dt)
 {
 	respawntime += dt;
-
+	time += 192.0f*dt;
 	if (respawntime > 5.f)
 	{
 		respawntime = 0.f;
@@ -130,7 +133,13 @@ void SceneDev2::update(float dt)
 					if (Utilities::isColliding(bulptr->getRect(), ducptr->getRect()))
 					{
 						bulptr->hit();
-						score += ducptr->hit();
+						int upscore = ducptr->hit();
+						score += upscore;
+						time -= upscore * 15;
+						if (time < 0)
+						{
+							time = 0; 
+						}
 						break;
 					}
 				}
@@ -145,11 +154,16 @@ void SceneDev2::update(float dt)
 
 
 #pragma endregion 충돌 체크
-
+	timebar.setSize({Framework::Instance().getWindow().getSize().x - time, 10.f});
+	if (Framework::Instance().getWindow().getSize().x < time)
+	{
+		Framework::Instance().setTimeScale(0.0);
+	}
 	Scene::update(dt);
 }
 
 void SceneDev2::draw(sf::RenderWindow& window)
 {
 	Scene::draw(window);
+	window.draw(timebar);
 }

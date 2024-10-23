@@ -7,6 +7,7 @@ protected:
     float respawntime = 0.f;
     int score = 0;
     float time = 0.f;
+    sf::RectangleShape timebar;
 
 public:
     SceneDev2();
