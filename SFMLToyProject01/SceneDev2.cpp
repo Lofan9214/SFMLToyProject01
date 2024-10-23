@@ -31,7 +31,7 @@ void SceneDev2::exit()
 
 	Scene::exit();
 
-	ResourceMgr<sf::Texture>::Instance().load("graphics/background.png");
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/background.png");
 }
 
 void SceneDev2::update(float dt)
