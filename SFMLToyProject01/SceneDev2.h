@@ -4,6 +4,8 @@
 class SceneDev2 : public Scene
 {
 protected:
+    float respawntime = 0.f;
+
 public:
     SceneDev2();
     ~SceneDev2() = default;

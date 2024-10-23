@@ -8,9 +8,7 @@ DuckGo::DuckGo(std::string texId, std::string name)
 
 void DuckGo::init()
 {
-	fly();
-	position.x = Utilities::randInt(100, 1800);
-	position.y = Utilities::randInt(100, 400);
+	spawn();
 }
 
 void DuckGo::update(float dt)
@@ -20,7 +18,7 @@ void DuckGo::update(float dt)
 	if (position.x < (-200) || position.x>(Framework::Instance().getWindow().getSize().x + 200)
 		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
 	{
-		fly();
+		spawn();
 	}
 	SpriteGo::update(dt);
 }
@@ -34,9 +32,7 @@ void DuckGo::reset()
 {
 	SpriteGo::reset();
 	active = true;
-	fly();
-	position.x = Utilities::randInt(100, 1800);
-	position.y = Utilities::randInt(100, 400);
+	spawn();
 }
 
 void DuckGo::release()
@@ -44,7 +40,7 @@ void DuckGo::release()
 	SpriteGo::release();
 }
 
-void DuckGo::fly()
+void DuckGo::spawn(bool respawn)
 {
 	score = 10;
 	active = true;
@@ -60,6 +56,10 @@ void DuckGo::fly()
 		angle = Utilities::randFloat(Utilities::pi * 0.95f, Utilities::pi * 1.05f);
 		position.x = 1920 + 100;
 	}
+	if (!respawn)
+	{
+		position.x = Utilities::randInt(100, 1800);
+	}
 	position.y = Utilities::randInt(100, 400);
 	velocity.x = speed * cosf(angle);
 	velocity.y = speed * sinf(angle);
@@ -68,5 +68,6 @@ void DuckGo::fly()
 int DuckGo::hit()
 {
 	active = false;
+	position.x = -1000.f;
 	return score;
 }
