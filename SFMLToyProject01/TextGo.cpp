@@ -14,6 +14,9 @@ void TextGo::setOrigin(Origins iPreset)
 
 void TextGo::setOrigin(const sf::Vector2f& iOrigin)
 {
+	originPreset = Origins::Custom;
+	origin = iOrigin;
+	txtText.setOrigin(iOrigin);
 }
 
 void TextGo::setPosition(const sf::Vector2f& iPos)
@@ -23,14 +26,28 @@ void TextGo::setPosition(const sf::Vector2f& iPos)
 	txtText.setPosition(iPos);
 }
 
+void TextGo::init()
+{
+	GameObject::init();
+}
+
+void TextGo::release()
+{
+	GameObject::release();
+}
+
 void TextGo::reset()
 {
-	auto& fontResMgr = ResourceMgr<sf::Font>::Instance();
-	txtText.setFont(fontResMgr.get(strFontId));
+	txtText.setFont(ResourceMgr<sf::Font>::Instance().get(strFontId));
 	if (originPreset != Origins::Custom)
 	{
 		setOrigin(originPreset);
 	}
+}
+
+void TextGo::update(float dt)
+{
+	GameObject::update(dt);
 }
 
 void TextGo::draw(sf::RenderWindow& window)
@@ -42,5 +59,8 @@ void TextGo::draw(sf::RenderWindow& window)
 void TextGo::setString(const std::string& newText)
 {
 	txtText.setString(newText);
-
+	if (originPreset != Origins::Custom)
+	{
+		setOrigin(originPreset);
+	}
 }

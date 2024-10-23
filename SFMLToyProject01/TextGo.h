@@ -21,7 +21,11 @@ public:
 
 	void setPosition(const sf::Vector2f& iPos) override;
 
+	void init() override;
+	void release() override;
 	void reset() override;
+
+	void update(float dt) override;
 	void draw(sf::RenderWindow& window) override;
 
 	void setString(const std::string& newText);
