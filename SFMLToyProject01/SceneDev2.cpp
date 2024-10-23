@@ -61,7 +61,7 @@ void SceneDev2::update(float dt)
 	{
 		SceneMgr::Instance().changeScene(SceneIds::Dev1);
 	}
-	if (InputMgr::isMouseButtonPressing(sf::Mouse::Left))
+	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
 		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
