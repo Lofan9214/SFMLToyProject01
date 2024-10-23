@@ -20,7 +20,7 @@ void SceneDev2::init()
 	{
 		AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
 	}
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
 		AddGo(new DuckGo("graphics/duck.png", "duck"));
 	}
@@ -91,7 +91,10 @@ void SceneDev2::update(float dt)
 				auto ptr2 = dynamic_cast<DuckGo*> (*it2);
 				if (ptr2 != nullptr && ptr2->isActive() == true)
 				{
-					Utilities::calcCollide(ptr->getRect(), ptr2->getRect());
+					if (Utilities::calcCollide(ptr->getRect(), ptr2->getRect()))
+					{
+						ptr2->hit();
+					}
 				}
 
 			}
