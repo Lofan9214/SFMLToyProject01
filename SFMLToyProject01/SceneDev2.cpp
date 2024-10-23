@@ -7,7 +7,7 @@
 #include "TextGo.h"
 
 SceneDev2::SceneDev2()
-	: Scene(SceneIds::Dev2)
+	: Scene(SceneIds::Dev2), gameOver(nullptr)
 {
 }
 
@@ -32,12 +32,21 @@ void SceneDev2::init()
 	obj = AddGo(new TextGo("fonts/KOMIKAP_.ttf", "Scoreboard"));
 	obj->setPosition({ 10.f, 10.f });
 
+	obj = AddGo(new TextGo("fonts/KOMIKAP_.ttf", "GameOver"));
+	obj->setActive(false);
+	obj->setOrigin(Origins::MC);
+	obj->setPosition({ Framework::Instance().getWindow().getSize().x * 0.5f,
+		Framework::Instance().getWindow().getSize().y * 0.5f });
+	gameOver = dynamic_cast<TextGo*>(obj);
 	Scene::init();
 }
 
 void SceneDev2::enter()
 {
 	std::cout << "SceneDev2::Enter()" << std::endl;
+
+	Framework::Instance().setTimeScale(1.0);
+	time = 0.f;
 
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Head.png");
@@ -55,7 +64,12 @@ void SceneDev2::enter()
 	ResourceMgr<sf::Font>::Instance().load("fonts/KOMIKAP_.ttf");
 
 	timebar.setFillColor(sf::Color::Red);
-	timebar.setSize({ Framework::Instance().getWindow().getSize().x+0.f , 10.f });
+	timebar.setSize({ Framework::Instance().getWindow().getSize().x + 0.f , 10.f });
+
+	if (gameOver != nullptr)
+	{
+		gameOver->setActive(false);
+	}
 
 	Scene::enter();
 }
@@ -76,7 +90,7 @@ void SceneDev2::exit()
 void SceneDev2::update(float dt)
 {
 	respawntime += dt;
-	time += 192.0f*dt;
+	time += 192.0f * dt;
 	if (respawntime > 5.f)
 	{
 		respawntime = 0.f;
@@ -90,10 +104,6 @@ void SceneDev2::update(float dt)
 		}
 	}
 
-	if (InputMgr::isKeyDown(sf::Keyboard::Space))
-	{
-		SceneMgr::Instance().changeScene(SceneIds::Dev1);
-	}
 	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
 		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
@@ -138,7 +148,7 @@ void SceneDev2::update(float dt)
 						time -= upscore * 15;
 						if (time < 0)
 						{
-							time = 0; 
+							time = 0;
 						}
 						break;
 					}
@@ -146,20 +156,35 @@ void SceneDev2::update(float dt)
 			}
 		}
 		auto txtptr = dynamic_cast<TextGo*>(*it);
-		if (txtptr != nullptr)
+		if (txtptr != nullptr&&txtptr->getName()=="Scoreboard")
 		{
 			txtptr->setString("Score : " + std::to_string(score));
 		}
+
 	}
+
+
 
 
 #pragma endregion 충돌 체크
-	timebar.setSize({Framework::Instance().getWindow().getSize().x - time, 10.f});
+	timebar.setSize({ Framework::Instance().getWindow().getSize().x - time, 10.f });
 	if (Framework::Instance().getWindow().getSize().x < time)
 	{
+		if (gameOver != nullptr)
+		{
+			gameOver->setActive(true);
+			gameOver->setString("Game Over! score: "+ std::to_string(score)+"\npress Space to go Main screen");
+		}
 		Framework::Instance().setTimeScale(0.0);
 	}
 	Scene::update(dt);
+
+
+	if (InputMgr::isKeyDown(sf::Keyboard::Space)
+		&& Framework::Instance().getTimeScale() == 0)
+	{
+		SceneMgr::Instance().changeScene(SceneIds::Dev1);
+	}
 }
 
 void SceneDev2::draw(sf::RenderWindow& window)

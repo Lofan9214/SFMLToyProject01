@@ -39,6 +39,8 @@ void TextGo::release()
 void TextGo::reset()
 {
 	txtText.setFont(ResourceMgr<sf::Font>::Instance().get(strFontId));
+	txtText.setCharacterSize(50);
+	
 	if (originPreset != Origins::Custom)
 	{
 		setOrigin(originPreset);

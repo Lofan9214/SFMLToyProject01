@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "TextGo.h"
 
 class SceneDev2 : public Scene
 {
@@ -8,6 +9,8 @@ protected:
     int score = 0;
     float time = 0.f;
     sf::RectangleShape timebar;
+    TextGo* gameOver;
+
 
 public:
     SceneDev2();
