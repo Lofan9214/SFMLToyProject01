@@ -33,7 +33,7 @@ void SceneDev2::init()
 void SceneDev2::enter()
 {
 	std::cout << "SceneDev2::Enter()" << std::endl;
-	
+
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Head.png");
 	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
@@ -67,6 +67,21 @@ void SceneDev2::update(float dt)
 {
 	Scene::update(dt);
 
+	respawntime += dt;
+
+	if (respawntime > 5.f)
+	{
+		respawntime = 0.f;
+		for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+		{
+			auto ptr2 = dynamic_cast<DuckGo*> (*it2);
+			if (ptr2 != nullptr && ptr2->isActive() == false)
+			{
+				ptr2->spawn(true);
+			}
+		}
+	}
+
 	if (InputMgr::isKeyDown(sf::Keyboard::Space))
 	{
 		SceneMgr::Instance().changeScene(SceneIds::Dev1);
@@ -78,7 +93,7 @@ void SceneDev2::update(float dt)
 			auto ptr = dynamic_cast<BulletGo*>(*it);
 			if (ptr != nullptr && ptr->isActive() == false)
 			{
-				
+
 				ptr->fire(Framework::Instance().getWindow(), { 1920 / 2, 1080 });
 				break;
 			}

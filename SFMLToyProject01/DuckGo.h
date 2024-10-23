@@ -25,7 +25,7 @@ public:
 	void update(float dt) override;
 	void draw(sf::RenderWindow& window) override;
 
-	void fly();
+	void spawn(bool respawn);
 	int hit();
 };
 
