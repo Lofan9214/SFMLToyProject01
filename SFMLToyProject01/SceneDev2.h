@@ -16,6 +16,7 @@ protected:
     TextGo* textScore;
     PlayerGo* playerGo;
     SpriteGo* cloudGo;
+    SpriteGo* groundGo;
     std::vector<DuckGo*> vecDuck;
     std::vector<DuckGo*> vecDuckAlive;
     std::vector<DuckGo*> vecDuckDead;

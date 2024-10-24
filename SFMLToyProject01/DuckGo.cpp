@@ -132,9 +132,20 @@ void DuckGo::spawn(bool respawn)
 	displacementPeriod = Utilities::randFloat(1.5f, 4.f);
 	displacement = { 0,0 };
 	pattern = (movingPattern)Utilities::randInt(0, 3);
+	float angle;
+	scaley = Utilities::randFloat(0.9f, 1.2f);
+	scaleDispAmplitude = Utilities::randFloat(-0.2f, 0.3f);
+	scaleDispPeriod = Utilities::randFloat(1.5f, 4.f);
 
 	wing = Utilities::randFloat(0.f, 0.5f);
-	if (Utilities::randInt(0, 100) > 95 - difficulty)
+	int probability = Utilities::randInt(1, 100);
+	if (probability < 11)
+	{
+		score = -10;
+		speed = difficulty * 100 + Utilities::randFloat(600.f, 800.f);
+		sprite.setColor(sf::Color(50, 50, 50, 255));
+	}
+	else if (probability > 95 - difficulty)
 	{
 		score = 20;
 		speed = difficulty * 100 + Utilities::randFloat(1100.f, 1300.f);
@@ -146,10 +157,7 @@ void DuckGo::spawn(bool respawn)
 		speed = difficulty * 100 + Utilities::randFloat(600.f, 800.f);
 		sprite.setColor(sf::Color::White);
 	}
-	float angle;
-	scaley = Utilities::randFloat(0.7f, 1.3f);
-	scaleDispAmplitude = Utilities::randFloat(-0.3f, 0.3f);
-	scaleDispPeriod = Utilities::randFloat(1.5f, 4.f);
+	
 
 	if (Utilities::randInt(0, 1) == 1)
 	{
@@ -168,7 +176,7 @@ void DuckGo::spawn(bool respawn)
 	{
 		position.x = Utilities::randInt(100, 1800);
 	}
-	position.y = Utilities::randInt(100, 400);
+	position.y = Utilities::randInt(150, 400);
 	velocity.x = speed * cosf(angle);
 	velocity.y = speed * sinf(angle);
 }

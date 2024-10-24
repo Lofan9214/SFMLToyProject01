@@ -18,7 +18,11 @@ void SceneDev2::init()
 	cloudGo = new SpriteGo("graphics/underbackground.png");
 	AddGo(cloudGo);
 
-	AddGo(new SpriteGo("graphics/background2.png"));
+	groundGo = new SpriteGo("graphics/background2.png");
+	groundGo->setOrigin(Origins::BL);
+	groundGo->setPosition({ 0.f, (float)Framework::Instance().getWindow().getSize().y });
+	AddGo(groundGo);
+
 
 	for (int i = 0; i < 15; ++i)
 	{
@@ -31,7 +35,7 @@ void SceneDev2::init()
 	playerGo = new PlayerGo("graphics/Player2.png", "player");
 	AddGo(playerGo);
 
-	for (int i = 0; i < 7; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
 		DuckGo* tmp = new DuckGo("graphics/duckAll.png", "duck");
 		AddGo(tmp);
@@ -62,7 +66,7 @@ void SceneDev2::enter()
 	score = 0;
 	reloadtime = 0;
 	respawntime = 0.f;
-	
+
 
 	ResourceMgr<sf::Texture>::Instance().load("graphics/underbackground.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
@@ -246,7 +250,7 @@ void SceneDev2::update(float dt)
 	}
 
 	auto cloudpos = cloudGo->getPosition();
-	cloudpos.x -= 100.f * dt;
+	cloudpos.x -= 30.f * dt;
 	if (cloudpos.x < -5540)
 	{
 		std::cout << "cloudmove" << std::endl;

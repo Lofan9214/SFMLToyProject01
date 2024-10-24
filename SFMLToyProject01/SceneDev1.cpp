@@ -13,9 +13,11 @@ void SceneDev1::init()
 {
 	std::cout << "SceneDev1::Init()" << std::endl;
 
-	GameObject* obj = AddGo(new SpriteGo("graphics/background2.png"));
-	obj->setOrigin(Origins::MC);
-	obj->setPosition({ 1920 / 2, 1080 / 2 });
+	GameObject* obj = AddGo(new SpriteGo("graphics/underbackground.png"));
+		
+	obj = AddGo(new SpriteGo("graphics/background2.png"));
+	obj->setOrigin(Origins::BL);
+	obj->setPosition({ 0, 1080});
 
 	obj = AddGo(new SpriteGo("graphics/Title.png", "title"));
 	obj->setOrigin(Origins::MC);
@@ -31,6 +33,7 @@ void SceneDev1::enter()
 {
 	std::cout << "SceneDev1::Enter()" << std::endl;
 
+	ResourceMgr<sf::Texture>::Instance().load("graphics/underbackground.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Title.png");
 	ResourceMgr<sf::Font>::Instance().load("fonts/KOMIKAP_.ttf");
@@ -44,6 +47,7 @@ void SceneDev1::exit()
 
 	Scene::exit();
 
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/underbackground.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/background2.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Title.png");
 	ResourceMgr<sf::Font>::Instance().unload("fonts/KOMIKAP_.ttf");
