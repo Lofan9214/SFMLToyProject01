@@ -32,7 +32,7 @@ void BulletGo::reset()
 {
 	SpriteGo::reset();
 	active = false;
-	sprite.setScale(0.4f, 0.4f);
+	sprite.setScale(0.5f, 0.5f);
 }
 
 void BulletGo::fire(sf::RenderWindow& window, const sf::Vector2f& playerpos)
