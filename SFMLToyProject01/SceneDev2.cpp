@@ -17,7 +17,7 @@ void SceneDev2::init()
 	std::cout << "SceneDev2::Init()" << std::endl;
 
 	AddGo(new SpriteGo("graphics/background2.png"));
-	for (int i = 0; i < 30; ++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		obj = AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
 		obj->setOrigin(Origins::MC);
@@ -55,7 +55,7 @@ void SceneDev2::enter()
 		auto ptr = dynamic_cast<PlayerGo*>(*it);
 		if (ptr != nullptr)
 		{
-			ptr->setOrigin(Origins::BC);
+			ptr->setOrigin({ 100.f,300.f });
 			ptr->setPosition({ 1920 / 2, 1080 });
 		}
 	}
@@ -106,25 +106,26 @@ void SceneDev2::update(float dt)
 
 	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
+		PlayerGo* playptr = nullptr;
+		std::vector<BulletGo*> vecBul;
 		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
-			auto plaptr = dynamic_cast<PlayerGo*>(*it);
-			if (plaptr != nullptr && plaptr->isActive() == true)
+			auto asplaptr = dynamic_cast<PlayerGo*>(*it);
+			auto bulptr = dynamic_cast<BulletGo*> (*it);
+			if (asplaptr != nullptr && asplaptr->isActive() == true)
 			{
-				int bulcount = 0;
-				for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
-				{
-					auto bulptr = dynamic_cast<BulletGo*> (*it2);
-					if (bulptr != nullptr && bulptr->isActive() == false)
-					{
-						bulptr->fire(Framework::Instance().getWindow(), plaptr->getMuzzlePos());
-						if (++bulcount > 2)
-						{
-							break;
-						}
-					}
-				}
-				break;
+				playptr = asplaptr;
+			}
+			if (bulptr != nullptr && bulptr->isActive() == false)
+			{
+				vecBul.push_back(bulptr);
+			}
+		}
+		if (playptr != nullptr && vecBul.size() > 2)
+		{
+			for (int i = 0;i < 3;++i)
+			{
+				vecBul[i]->fire(Framework::Instance().getWindow(), playptr->getMuzzlePos());
 			}
 		}
 	}

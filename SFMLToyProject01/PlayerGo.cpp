@@ -10,7 +10,7 @@ sf::Vector2f PlayerGo::getMuzzlePos() const
 {
 	sf::Vector2f pos = sprite.getPosition();
 	float rot = Utilities::deg2rad(sprite.getRotation() - 90.f);
-	float play = sprite.getLocalBounds().height;
+	float play = sprite.getOrigin().y;
 
 	pos.x += play * cosf(rot);
 	pos.y += play * sinf(rot);

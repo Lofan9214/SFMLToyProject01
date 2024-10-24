@@ -20,8 +20,6 @@ void DuckGo::update(float dt)
 {
 	position += velocity * dt;
 
-
-
 	wing += dt;
 	if (wing > 0.5)
 	{
@@ -81,12 +79,24 @@ void DuckGo::release()
 
 void DuckGo::spawn(bool respawn)
 {
-	score = 10;
+	score =0;
+	float speed;
 	active = true;
 	bAlive = true;
 	wing = Utilities::randFloat(0.f, 0.5f);
+	if (Utilities::randFloat(0.f, 1.f) > 0.95f)
+	{
+		score = 20;
+		speed = difficulty + Utilities::randFloat(1200.f, 1500.f);
+		sprite.setColor(sf::Color::Blue);
+	}
+	else
+	{
+		score = 10;
+		speed = difficulty + Utilities::randFloat(600.f, 800.f);
+		sprite.setColor(sf::Color::White);
+	}
 	float angle;
-	float speed = difficulty + Utilities::randFloat(600.f, 800.f);
 	if (Utilities::randInt(0, 1) == 1)
 	{
 		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
@@ -118,7 +128,7 @@ int DuckGo::hit()
 	sprite.setTextureRect(intrec);
 	velocity.x = 0;
 	velocity.y = 300;
-	
+
 
 	return score;
 }

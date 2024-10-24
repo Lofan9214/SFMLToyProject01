@@ -9,6 +9,10 @@ SpriteGo::SpriteGo(const std::string& texId, const std::string& name)
 void SpriteGo::setOrigin(Origins preset)
 {
 	originPreset = preset;
+	if (preset == Origins::Custom)
+	{
+		return;
+	}
 	origin = Utilities::setOrigin(sprite, originPreset);
 }
 

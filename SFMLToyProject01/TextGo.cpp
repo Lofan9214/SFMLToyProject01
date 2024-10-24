@@ -9,6 +9,10 @@ TextGo::TextGo(const std::string& iFontId, const std::string& iName)
 void TextGo::setOrigin(Origins iPreset)
 {
 	originPreset = iPreset;
+	if (iPreset == Origins::Custom)
+	{
+		return;
+	}
 	origin = Utilities::setOrigin(txtText,iPreset);
 }
 
