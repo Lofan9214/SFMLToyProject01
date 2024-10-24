@@ -150,8 +150,13 @@ void SceneDev2::update(float dt)
 					remainBullet[i]->fire(Framework::Instance().getWindow(), playerGo->getMuzzlePos());
 				}
 				playerGo->playGunsound("sound/Bernice_Skill01_Fire.wav");
+				playerGo->setfireClick(true);
 			}
 		}
+	}
+	if (InputMgr::isMouseButtonUp(sf::Mouse::Left))
+	{
+		playerGo->setfireClick(false);
 	}
 
 #pragma region 충돌 체크

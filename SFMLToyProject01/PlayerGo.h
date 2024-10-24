@@ -4,6 +4,7 @@ class PlayerGo : public SpriteGo
 protected:
 	float playerspeed = 0.f;
 	sf::Sound gunsound;
+	bool fireClick;
 public:
 	PlayerGo() = default;
 	virtual ~PlayerGo() = default;
@@ -11,6 +12,8 @@ public:
 
 	sf::Vector2f getMuzzlePos() const;
 	void playGunsound(std::string soundId);
+
+	void setfireClick(bool fC);
 
 	float playerMove(float speed);
 

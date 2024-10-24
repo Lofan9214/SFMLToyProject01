@@ -24,6 +24,11 @@ void PlayerGo::playGunsound(std::string soundId)
 	gunsound.play();
 }
 
+void PlayerGo::setfireClick(bool fC)
+{
+	fireClick = fC;
+}
+
 float PlayerGo::playerMove(float speed)
 {
 	playerspeed = speed;
@@ -32,12 +37,20 @@ float PlayerGo::playerMove(float speed)
 
 void PlayerGo::init()
 {
+	
 }
 
 void PlayerGo::reset()
 {
 	playerspeed = 0;
 	SpriteGo::reset();
+	sf::IntRect tmp;
+	tmp.left = 0;
+	tmp.width = sprite.getTexture()->getSize().x /2;
+	tmp.top= 0;
+	tmp.height = sprite.getTexture()->getSize().y;
+	sprite.setTextureRect(tmp);
+
 }
 
 void PlayerGo::update(float dt)
@@ -62,6 +75,18 @@ void PlayerGo::update(float dt)
 			pos2.x += playerspeed * dt;
 		}
 		sprite.setPosition(pos2);
+
+		sf::IntRect intrec = sprite.getTextureRect();
+		if (fireClick == true)
+		{
+			intrec.left = intrec.width;
+		}
+		else
+		{
+			intrec.left = 0;
+		}
+		sprite.setTextureRect(intrec);
+
 	}
 
 }
