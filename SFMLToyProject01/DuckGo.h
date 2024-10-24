@@ -22,6 +22,11 @@ protected:
 	float displacementAmplitude = 0.f;
 	float displacementPeriod = 0.f;
 
+	float scalex = 0.f;
+	float scaley = 0.f;
+	float scaleDispAmplitude = 0.f;
+	float scaleDispPeriod = 0.f;
+
 	bool bAlive = true;
 
 	DuckGo(const DuckGo&) = delete;

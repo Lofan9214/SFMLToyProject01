@@ -13,6 +13,7 @@ bool DuckGo::isAlive() const
 
 void DuckGo::init()
 {
+	active = false;
 	spawn();
 }
 
@@ -36,6 +37,15 @@ void DuckGo::update(float dt)
 		{
 			displacement.x += displacementAmplitude * sinf(displacementPeriod) * dt;
 			displacement.y += displacementAmplitude * cosf(displacementPeriod) * dt;
+		}
+
+		if (scalex > 0)
+		{
+			setScale({ scalex + scaleDispAmplitude * cosf(displacementPeriod * flytime), scaley + scaleDispAmplitude*cosf(displacementPeriod * flytime) });
+		}
+		else
+		{
+			setScale({ -scalex - scaleDispAmplitude * cosf(displacementPeriod * flytime), scaley + scaleDispAmplitude* cosf(displacementPeriod * flytime) });
 		}
 	}
 
@@ -73,6 +83,7 @@ void DuckGo::update(float dt)
 		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
 		&& bAlive)
 	{
+		active = false;
 		spawn(true);
 	}
 
@@ -90,7 +101,7 @@ void DuckGo::reset()
 	SpriteGo::reset();
 	sf::IntRect frame = sf::IntRect(0, 0, 140, 95);
 	sprite.setTextureRect(frame);
-	active = true;
+	active = false;
 	wing = Utilities::randFloat(0.f, 0.5f);
 
 	spawn();
@@ -103,6 +114,10 @@ void DuckGo::release()
 
 void DuckGo::spawn(bool respawn)
 {
+	if (active == true)
+	{
+		return;
+	}
 	score = 0;
 	flytime = 0.f;
 	float speed;
@@ -127,18 +142,23 @@ void DuckGo::spawn(bool respawn)
 		sprite.setColor(sf::Color::White);
 	}
 	float angle;
+	scaley = Utilities::randFloat(0.7f, 1.3f);
+	scaleDispAmplitude = Utilities::randFloat(-0.3f, 0.3f);
+	scaleDispPeriod = Utilities::randFloat(1.5f, 4.f);
+
 	if (Utilities::randInt(0, 1) == 1)
 	{
 		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
 		position.x = -200;
-		sprite.setScale(-0.8f, 0.8f);
+		scalex = -scaley;
 	}
 	else
 	{
 		angle = Utilities::randFloat(Utilities::pi * 0.97f, Utilities::pi * 1.03f);
 		position.x = 1920 + 200;
-		sprite.setScale(0.8f, 0.8f);
+		scalex = scaley;
 	}
+	sprite.setScale(scalex, scaley);
 	if (!respawn)
 	{
 		position.x = Utilities::randInt(100, 1800);

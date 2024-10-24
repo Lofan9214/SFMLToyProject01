@@ -13,31 +13,39 @@ SceneDev2::SceneDev2()
 
 void SceneDev2::init()
 {
-	GameObject* obj;
 	std::cout << "SceneDev2::Init()" << std::endl;
 
 	AddGo(new SpriteGo("graphics/background2.png"));
 	for (int i = 0; i < 15; ++i)
 	{
-		obj = AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
-		obj->setOrigin(Origins::MC);
+		BulletGo* tmp = new BulletGo("graphics/Bullet.png", "bullet");
+		AddGo(tmp);
+		tmp->setOrigin(Origins::MC);
+		vecBullet.push_back(tmp);
+		vecBulletLoaded.push_back(tmp);
 	}
-	AddGo(new PlayerGo("graphics/Player2.png", "player"));
+	playerGo = new PlayerGo("graphics/Player2.png", "player");
+	AddGo(playerGo);
+
 	for (int i = 0; i < 7; ++i)
 	{
-		obj = AddGo(new DuckGo("graphics/duckAll.png", "duck"));
-		obj->setOrigin(Origins::MC);
+		DuckGo* tmp = new DuckGo("graphics/duckAll.png", "duck");
+		AddGo(tmp);
+		tmp->setOrigin(Origins::MC);
+		vecDuck.push_back(tmp);
+		vecDuckAlive.push_back(tmp);
 	}
+	textScore = new TextGo("fonts/KOMIKAP_.ttf", "Scoreboard");
 
-	obj = AddGo(new TextGo("fonts/KOMIKAP_.ttf", "Scoreboard"));
-	obj->setPosition({ 10.f, 10.f });
+	AddGo(textScore);
+	textScore->setPosition({ 10.f, 10.f });
+	gameOver = new TextGo("fonts/KOMIKAP_.ttf", "GameOver");
+	AddGo(gameOver);
 
-	obj = AddGo(new TextGo("fonts/KOMIKAP_.ttf", "GameOver"));
-	obj->setActive(false);
-	obj->setOrigin(Origins::MC);
-	obj->setPosition({ Framework::Instance().getWindow().getSize().x * 0.5f,
+	gameOver->setActive(false);
+	gameOver->setOrigin(Origins::MC);
+	gameOver->setPosition({ Framework::Instance().getWindow().getSize().x * 0.5f,
 		Framework::Instance().getWindow().getSize().y * 0.5f });
-	gameOver = dynamic_cast<TextGo*>(obj);
 	Scene::init();
 }
 
@@ -53,15 +61,8 @@ void SceneDev2::enter()
 
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Player2.png");
-	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
-	{
-		auto ptr = dynamic_cast<PlayerGo*>(*it);
-		if (ptr != nullptr)
-		{
-			ptr->setOrigin({ 100.f,300.f });
-			ptr->setPosition({ 1920 / 2, 1080 });
-		}
-	}
+	playerGo->setOrigin({ 100.f,300.f });
+	playerGo->setPosition({ 1920 / 2, 1080 });
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Bullet.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/duckAll.png");
 	ResourceMgr<sf::Font>::Instance().load("fonts/KOMIKAP_.ttf");
@@ -69,10 +70,7 @@ void SceneDev2::enter()
 	timebar.setFillColor(sf::Color::Red);
 	timebar.setSize({ Framework::Instance().getWindow().getSize().x + 0.f , 10.f });
 
-	if (gameOver != nullptr)
-	{
-		gameOver->setActive(false);
-	}
+	gameOver->setActive(false);
 
 	Scene::enter();
 }
@@ -99,73 +97,43 @@ void SceneDev2::update(float dt)
 		return;
 	}
 
-	PlayerGo* playerptr = nullptr;
-	std::vector<DuckGo*> vecDuck;
-	std::vector<BulletGo*> vecBullet;
-	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
-	{
-		auto dyncastplayer = dynamic_cast<PlayerGo*> (*it);
-		if (dyncastplayer != nullptr)
-		{
-			playerptr = dyncastplayer;
-			continue;
-		}
-		auto dyncastDuck = dynamic_cast<DuckGo*> (*it);
-		if (dyncastDuck != nullptr)
-		{
-			vecDuck.push_back(dyncastDuck);
-			continue;
-		}
-		auto dyncastBullet = dynamic_cast<BulletGo*> (*it);
-		if (dyncastBullet != nullptr)
-		{
-			vecBullet.push_back(dyncastBullet);
-			continue;
-		}
-	}
-
-	if (Framework::Instance().getTimeScale() != 0)
-	{
-		if (InputMgr::isKeyPressing(sf::Keyboard::D)
-			&& playerptr != nullptr && playerptr->isActive() == true)
-		{
-			playerptr->playerMove(400);
-		}
-		if (InputMgr::isKeyPressing(sf::Keyboard::A)
-			&& playerptr != nullptr && playerptr->isActive() == true)
-		{
-			playerptr->playerMove(-400);
-		}
-		if ((InputMgr::isKeyUp(sf::Keyboard::D) || InputMgr::isKeyUp(sf::Keyboard::A))
-			&& playerptr != nullptr && playerptr->isActive() == true)
-		{
-			playerptr->playerMove(0);
-		}
-	}
-
 	respawntime += dt;
 	reloadtime += dt;
 	time += 192.0f * dt;
+
+	if (Framework::Instance().getTimeScale() != 0)
+	{
+		if (InputMgr::isKeyPressing(sf::Keyboard::D))
+		{
+			playerGo->playerMove(400);
+		}
+		if (InputMgr::isKeyPressing(sf::Keyboard::A))
+		{
+			playerGo->playerMove(-400);
+		}
+		if ((InputMgr::isKeyUp(sf::Keyboard::D) || InputMgr::isKeyUp(sf::Keyboard::A)))
+		{
+			playerGo->playerMove(0);
+		}
+	}
+
 	if (respawntime > 5.f)
 	{
 		respawntime = 0.f;
 		for (auto itduck : vecDuck)
 		{
-			if (itduck->isActive() == false)
-			{
-				itduck->spawn(true);
-			}
+			itduck->spawn(true);
 		}
 	}
 
 	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
-		if (playerptr != nullptr && vecBullet.size() > 2 && reloadtime > 0.5f)
+		if (reloadtime > 0.5f)
 		{
 			std::vector<BulletGo*> remainBullet;
 			for (auto itBullet : vecBullet)
 			{
-				if (itBullet->isActive()==false)
+				if (itBullet->isActive() == false)
 				{
 					remainBullet.push_back(itBullet);
 				}
@@ -175,7 +143,7 @@ void SceneDev2::update(float dt)
 				reloadtime = 0.f;
 				for (int i = 0;i < 3;++i)
 				{
-					remainBullet[i]->fire(Framework::Instance().getWindow(), playerptr->getMuzzlePos());
+					remainBullet[i]->fire(Framework::Instance().getWindow(), playerGo->getMuzzlePos());
 				}
 			}
 		}
@@ -188,7 +156,7 @@ void SceneDev2::update(float dt)
 		std::vector<DuckGo*> liveDuck;
 		for (auto itBullet : vecBullet)
 		{
-			if (itBullet->isActive()==true)
+			if (itBullet->isActive() == true)
 			{
 				curBullet.push_back(itBullet);
 			}
