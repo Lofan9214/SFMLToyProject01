@@ -24,6 +24,7 @@ public:
 	void reset() override;
 	void draw(sf::RenderWindow& window) override;
 
-
+	sf::IntRect getTextureRect() const;
+	void setTextureRect(const sf::IntRect& texturect);
 };
 

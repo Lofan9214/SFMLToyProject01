@@ -66,3 +66,13 @@ void SpriteGo::draw(sf::RenderWindow& window)
 	GameObject::draw(window);
 	window.draw(sprite);
 }
+
+sf::IntRect SpriteGo::getTextureRect() const
+{
+	return sprite.getTextureRect();
+}
+
+void SpriteGo::setTextureRect(const sf::IntRect& texturect)
+{
+	sprite.setTextureRect(texturect);
+}

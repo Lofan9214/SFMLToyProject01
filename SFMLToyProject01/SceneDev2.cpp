@@ -15,7 +15,11 @@ void SceneDev2::init()
 {
 	std::cout << "SceneDev2::Init()" << std::endl;
 
+	cloudGo = new SpriteGo("graphics/underbackground.png");
+	AddGo(cloudGo);
+
 	AddGo(new SpriteGo("graphics/background2.png"));
+
 	for (int i = 0; i < 15; ++i)
 	{
 		BulletGo* tmp = new BulletGo("graphics/Bullet.png", "bullet");
@@ -58,7 +62,9 @@ void SceneDev2::enter()
 	score = 0;
 	reloadtime = 0;
 	respawntime = 0.f;
+	
 
+	ResourceMgr<sf::Texture>::Instance().load("graphics/underbackground.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
 	ResourceMgr<sf::SoundBuffer>::Instance().load("sound/Bernice_Skill01_Fire.wav");
 	ResourceMgr<sf::SoundBuffer>::Instance().load("sound/chicken5.wav");
@@ -79,10 +85,11 @@ void SceneDev2::enter()
 
 void SceneDev2::exit()
 {
-	std::cout << "SceneDev1::Enter()" << std::endl;
+	std::cout << "SceneDev2::exit()" << std::endl;
 
 	Scene::exit();
 
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/underbackground.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/background2.png");
 	ResourceMgr<sf::SoundBuffer>::Instance().unload("sound/Bernice_Skill01_Fire.wav");
 	ResourceMgr<sf::SoundBuffer>::Instance().unload("sound/chicken5.wav");
@@ -237,6 +244,16 @@ void SceneDev2::update(float dt)
 		}
 		Framework::Instance().setTimeScale(0.0);
 	}
+
+	auto cloudpos = cloudGo->getPosition();
+	cloudpos.x -= 100.f * dt;
+	if (cloudpos.x < -5540)
+	{
+		std::cout << "cloudmove" << std::endl;
+
+		cloudpos.x += 5000.f;
+	}
+	cloudGo->setPosition(cloudpos);
 	Scene::update(dt);
 }
 
