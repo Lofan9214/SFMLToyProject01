@@ -79,21 +79,21 @@ void DuckGo::release()
 
 void DuckGo::spawn(bool respawn)
 {
-	score =0;
+	score = 0;
 	float speed;
 	active = true;
 	bAlive = true;
 	wing = Utilities::randFloat(0.f, 0.5f);
-	if (Utilities::randFloat(0.f, 1.f) > 0.95f)
+	if (Utilities::randInt(0, 100) > 95 - difficulty)
 	{
 		score = 20;
-		speed = difficulty + Utilities::randFloat(1200.f, 1500.f);
-		sprite.setColor(sf::Color::Blue);
+		speed = difficulty * 100 + Utilities::randFloat(1100.f, 1300.f);
+		sprite.setColor(sf::Color(150, 150, 255, 255));
 	}
 	else
 	{
 		score = 10;
-		speed = difficulty + Utilities::randFloat(600.f, 800.f);
+		speed = difficulty * 100 + Utilities::randFloat(600.f, 800.f);
 		sprite.setColor(sf::Color::White);
 	}
 	float angle;

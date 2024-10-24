@@ -129,7 +129,7 @@ void SceneDev2::update(float dt)
 				vecBul.push_back(bulptr);
 			}
 		}
-		if (playptr != nullptr && vecBul.size() > 2&& reloadtime>0.5f)
+		if (playptr != nullptr && vecBul.size() > 2 && reloadtime > 0.5f)
 		{
 			reloadtime = 0.f;
 			for (int i = 0;i < 3;++i)
@@ -170,13 +170,23 @@ void SceneDev2::update(float dt)
 		{
 			txtptr->setString("Score : " + std::to_string(score));
 		}
+	}
+#pragma endregion 面倒 眉农
 
+
+	if (score % 100 == 0)
+	{
+		for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+		{
+			auto ducptr = dynamic_cast<DuckGo*> (*it2);
+			if (ducptr != nullptr)
+			{
+				ducptr->setDifficulty(score / 100);
+			}
+		}
 	}
 
 
-
-
-#pragma endregion 面倒 眉农
 	timebar.setSize({ Framework::Instance().getWindow().getSize().x - time, 10.f });
 	if (Framework::Instance().getWindow().getSize().x < time)
 	{
