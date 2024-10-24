@@ -22,18 +22,21 @@ void DuckGo::update(float dt)
 	wing += dt;
 	flytime += dt;
 
-	if ((int)pattern > 1)
+	if (bAlive == true)
 	{
-		displacement.y = displacementAmplitude * sinf(displacementPeriod * flytime);
-	}
-	if ((int)pattern > 2)
-	{
-		displacement.x = displacementAmplitude * cosf(displacementPeriod * flytime);
-	}
-	if (pattern == movingPattern::totalyrandom)
-	{
-		displacement.x += displacementAmplitude * sinf(displacementPeriod) * dt;
-		displacement.y += displacementAmplitude * cosf(displacementPeriod) * dt;
+		if ((int)pattern > 1)
+		{
+			displacement.y = displacementAmplitude * sinf(displacementPeriod * flytime);
+		}
+		if ((int)pattern > 2)
+		{
+			displacement.x = displacementAmplitude * cosf(displacementPeriod * flytime);
+		}
+		if (pattern == movingPattern::totalyrandom)
+		{
+			displacement.x += displacementAmplitude * sinf(displacementPeriod) * dt;
+			displacement.y += displacementAmplitude * cosf(displacementPeriod) * dt;
+		}
 	}
 
 
