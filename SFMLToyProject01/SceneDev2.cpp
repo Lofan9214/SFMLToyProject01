@@ -89,7 +89,15 @@ void SceneDev2::exit()
 
 void SceneDev2::update(float dt)
 {
+	if (InputMgr::isKeyDown(sf::Keyboard::Space)
+		&& Framework::Instance().getTimeScale() == 0)
+	{
+		SceneMgr::Instance().changeScene(SceneIds::Dev1);
+		return;
+	}
+
 	respawntime += dt;
+	reloadtime += dt;
 	time += 192.0f * dt;
 	if (respawntime > 5.f)
 	{
@@ -121,8 +129,9 @@ void SceneDev2::update(float dt)
 				vecBul.push_back(bulptr);
 			}
 		}
-		if (playptr != nullptr && vecBul.size() > 2)
+		if (playptr != nullptr && vecBul.size() > 2&& reloadtime>0.5f)
 		{
+			reloadtime = 0.f;
 			for (int i = 0;i < 3;++i)
 			{
 				vecBul[i]->fire(Framework::Instance().getWindow(), playptr->getMuzzlePos());
@@ -179,13 +188,6 @@ void SceneDev2::update(float dt)
 		Framework::Instance().setTimeScale(0.0);
 	}
 	Scene::update(dt);
-
-
-	if (InputMgr::isKeyDown(sf::Keyboard::Space)
-		&& Framework::Instance().getTimeScale() == 0)
-	{
-		SceneMgr::Instance().changeScene(SceneIds::Dev1);
-	}
 }
 
 void SceneDev2::draw(sf::RenderWindow& window)

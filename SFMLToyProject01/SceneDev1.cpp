@@ -52,15 +52,14 @@ void SceneDev1::exit()
 
 void SceneDev1::update(float dt)
 {
-	Scene::update(dt);
-
 	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
 		SceneMgr::Instance().changeScene(SceneIds::Dev2);
+		return;
 	}
 
-	acttime += dt;
-	acttime = 0.f;
+	Scene::update(dt);
+
 	float min;
 	float diff;
 	
