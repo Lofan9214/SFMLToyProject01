@@ -18,6 +18,12 @@ sf::Vector2f PlayerGo::getMuzzlePos() const
 	return pos;
 }
 
+void PlayerGo::playGunsound(std::string soundId)
+{
+	gunsound.setBuffer(ResourceMgr<sf::SoundBuffer>::Instance().get(soundId));
+	gunsound.play();
+}
+
 float PlayerGo::playerMove(float speed)
 {
 	playerspeed = speed;

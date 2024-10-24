@@ -28,6 +28,8 @@ protected:
 	float scaleDispPeriod = 0.f;
 
 	bool bAlive = true;
+	
+	sf::Sound diesound;
 
 	DuckGo(const DuckGo&) = delete;
 	DuckGo& operator=(const DuckGo&) = delete;
@@ -38,6 +40,8 @@ public:
 	DuckGo(std::string texId, std::string name);
 
 	bool isAlive() const;
+
+	void playSoundDuckDie(std::string duckdie);
 
 	void init() override;
 	void reset() override;

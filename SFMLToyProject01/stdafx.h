@@ -9,6 +9,7 @@
 #include <random>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "Defines.h"
 #include "Utilities.h"

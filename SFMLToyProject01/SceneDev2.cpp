@@ -60,6 +60,8 @@ void SceneDev2::enter()
 	respawntime = 0.f;
 
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
+	ResourceMgr<sf::SoundBuffer>::Instance().load("sound/Bernice_Skill01_Fire.wav");
+	ResourceMgr<sf::SoundBuffer>::Instance().load("sound/chicken5.wav");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Player2.png");
 	playerGo->setOrigin({ 100.f,300.f });
 	playerGo->setPosition({ 1920 / 2, 1080 });
@@ -82,6 +84,8 @@ void SceneDev2::exit()
 	Scene::exit();
 
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/background2.png");
+	ResourceMgr<sf::SoundBuffer>::Instance().unload("sound/Bernice_Skill01_Fire.wav");
+	ResourceMgr<sf::SoundBuffer>::Instance().unload("sound/chicken5.wav");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Player2.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Bullet.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/duckAll.png");
@@ -145,6 +149,7 @@ void SceneDev2::update(float dt)
 				{
 					remainBullet[i]->fire(Framework::Instance().getWindow(), playerGo->getMuzzlePos());
 				}
+				playerGo->playGunsound("sound/Bernice_Skill01_Fire.wav");
 			}
 		}
 	}
@@ -189,6 +194,7 @@ void SceneDev2::update(float dt)
 						time = 0;
 					}
 					hit = true;
+					itDuck->playSoundDuckDie("sound/chicken5.wav");
 					break;
 				}
 			}

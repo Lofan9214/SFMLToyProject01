@@ -11,6 +11,12 @@ bool DuckGo::isAlive() const
 	return bAlive;
 }
 
+void DuckGo::playSoundDuckDie(std::string duckdie)
+{
+	diesound.setBuffer(ResourceMgr<sf::SoundBuffer>::Instance().get(duckdie));
+	diesound.play();
+}
+
 void DuckGo::init()
 {
 	active = false;
