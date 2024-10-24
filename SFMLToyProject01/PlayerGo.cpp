@@ -47,8 +47,8 @@ void PlayerGo::update(float dt)
 		sf::Vector2f pos2 = sprite.getPosition();
 		pos2.x += playerspeed * dt;
 		sprite.setPosition(pos2);
-		if (sprite.getPosition().x >= Framework::Instance().getWindow().getSize().x
-			|| sprite.getPosition().x <= 0.f)
+		if (sprite.getPosition().x >= Framework::Instance().getWindow().getSize().x - sprite.getLocalBounds().width / 2
+			|| sprite.getPosition().x <= 0.f + sprite.getLocalBounds().width / 2)
 		{
 			pos2.x -= playerspeed * dt;
 			playerspeed = 0;
