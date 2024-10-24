@@ -19,8 +19,25 @@ void DuckGo::init()
 void DuckGo::update(float dt)
 {
 	position += velocity * dt;
-
 	wing += dt;
+	flytime += dt;
+
+	sf::Vector2f displacement(0.f, 0.f);
+	if ((int)pattern > 1)
+	{
+		displacement.y = displacementAmplitude * sinf(displacementPeriod * flytime);
+	}
+	if ((int)pattern > 2)
+	{
+		displacement.x = displacementAmplitude * cosf(displacementPeriod * flytime);
+	}
+	if (pattern == movingPattern::totalyrandom)
+	{
+		displacement.x = displacementAmplitude * sinf(displacementPeriod) * dt;
+		displacement.y = displacementAmplitude * cosf(displacementPeriod) * dt;
+	}
+
+
 	if (wing > 0.5)
 	{
 		sf::IntRect intrec = sprite.getTextureRect();
@@ -34,13 +51,17 @@ void DuckGo::update(float dt)
 			{
 				intrec.left += intrec.width;
 			}
+			if (pattern == movingPattern::totalyrandom)
+			{
+				displacementAmplitude = Utilities::randFloat(400.f, 800.f);
+				displacementPeriod = Utilities::randFloat(0.f, 2.f * Utilities::pi);
+			}
 		}
 		else
 		{
 			active = false;
 			intrec.top = 0;
 			position.x = -1000.f;
-			sprite.setPosition(position);
 		}
 		sprite.setTextureRect(intrec);
 		wing = 0;
@@ -53,7 +74,8 @@ void DuckGo::update(float dt)
 		spawn(true);
 	}
 
-	SpriteGo::update(dt);
+	sprite.setPosition(position + displacement);
+	//SpriteGo::update(dt);
 }
 
 void DuckGo::draw(sf::RenderWindow& window)
@@ -80,9 +102,15 @@ void DuckGo::release()
 void DuckGo::spawn(bool respawn)
 {
 	score = 0;
+	flytime = 0.f;
 	float speed;
 	active = true;
 	bAlive = true;
+	displacementAmplitude = Utilities::randFloat(50.f, 150.f);
+	displacementPeriod = Utilities::randFloat(1.5f, 4.f);
+
+	pattern = (movingPattern)Utilities::randInt(0, 3);
+
 	wing = Utilities::randFloat(0.f, 0.5f);
 	if (Utilities::randInt(0, 100) > 95 - difficulty)
 	{
