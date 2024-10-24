@@ -99,6 +99,60 @@ void SceneDev2::update(float dt)
 		return;
 	}
 
+	if (InputMgr::isKeyPressing(sf::Keyboard::D)
+		&& Framework::Instance().getTimeScale() != 0)
+	{
+		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+		{
+			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
+			if (ptr1 != nullptr && ptr1->isActive() == true)
+			{
+				ptr1->playerMove(400);
+			}
+		}
+	}
+
+	if (InputMgr::isKeyPressing(sf::Keyboard::A)
+		&& Framework::Instance().getTimeScale() != 0)
+	{
+		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+		{
+			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
+			if (ptr1 != nullptr && ptr1->isActive() == true)
+			{
+				ptr1->playerMove(-400);
+			}
+		}
+	}
+
+	if (InputMgr::isKeyUp(sf::Keyboard::D)
+		&& Framework::Instance().getTimeScale() != 0)
+	{
+		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+		{
+			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
+			if (ptr1 != nullptr && ptr1->isActive() == true)
+			{
+				ptr1->playerMove(0);
+			}
+		}
+	}
+
+	if (InputMgr::isKeyUp(sf::Keyboard::A)
+		&& Framework::Instance().getTimeScale() != 0)
+	{
+		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+		{
+			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
+			if (ptr1 != nullptr && ptr1->isActive() == true)
+			{
+				ptr1->playerMove(0);
+			}
+		}
+	}
+
+	
+
 	respawntime += dt;
 	reloadtime += dt;
 	time += 192.0f * dt;

@@ -18,6 +18,12 @@ sf::Vector2f PlayerGo::getMuzzlePos() const
 	return pos;
 }
 
+float PlayerGo::playerMove(float speed)
+{	
+	playerspeed = speed;
+	return playerspeed;
+}
+
 void PlayerGo::init()
 {
 }
@@ -37,6 +43,10 @@ void PlayerGo::update(float dt)
 		float degr = Utilities::rad2deg(radi) + 90;
 
 		sprite.setRotation(degr);
+		
+		sf::Vector2f pos2 = sprite.getPosition();
+		pos2.x += playerspeed * dt;
+		sprite.setPosition(pos2);
 	}
 }
 
