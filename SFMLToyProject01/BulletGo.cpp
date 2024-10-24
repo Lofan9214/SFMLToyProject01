@@ -39,7 +39,7 @@ void BulletGo::fire(sf::RenderWindow& window, const sf::Vector2f& playerpos)
 {
 	auto mousepos = InputMgr::getMousePosition(window);
 	float angle = atan2f(mousepos.y - playerpos.y, mousepos.x - playerpos.x) + Utilities::randFloat(-Utilities::pi * 0.01f, Utilities::pi * 0.01f);
-	float spd = 1200 + Utilities::randFloat(-20.f, 20.f);
+	float spd = 1500 + Utilities::randFloat(-20.f, 20.f);
 	Velocity.x = spd * cosf(angle);
 	Velocity.y = spd * sinf(angle);
 	position = playerpos;

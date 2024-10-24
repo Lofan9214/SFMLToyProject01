@@ -6,6 +6,7 @@ protected:
 	enum class movingPattern
 	{
 		straight,
+		totalyrandom,
 		wave,
 		circlic,
 	};
@@ -15,7 +16,10 @@ protected:
 	movingPattern pattern;
 	sf::Vector2f velocity;
 
-	float wing = 0;
+	float wing = 0.f;
+	float flytime = 0.f;
+	float displacementAmplitude = 0.f;
+	float displacementPeriod = 0.f;
 
 	bool bAlive = true;
 
