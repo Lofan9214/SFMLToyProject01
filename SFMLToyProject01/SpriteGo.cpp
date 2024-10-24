@@ -19,6 +19,11 @@ void SpriteGo::setOrigin(const sf::Vector2f& newOrigin)
 	sprite.setOrigin(origin);
 }
 
+void SpriteGo::setScale(const sf::Vector2f& scalevector)
+{
+	sprite.setScale(scalevector);
+}
+
 sf::FloatRect SpriteGo::getRect()
 {
 	return sprite.getGlobalBounds();

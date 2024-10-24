@@ -2,15 +2,12 @@
 class PlayerGo : public SpriteGo
 {
 protected:
-	sf::Sprite gun;
-	std::string guntextureid;
-	std::string bullettexturid;
-	//std::vector<BulletGo> bullets;
-
 public:
 	PlayerGo() = default;
 	virtual ~PlayerGo() = default;
 	PlayerGo(std::string playerid, std::string name);
+
+	sf::Vector2f getMuzzlePos() const;
 
 	void init() override;
 	void reset() override;

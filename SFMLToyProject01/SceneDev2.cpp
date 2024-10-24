@@ -117,7 +117,7 @@ void SceneDev2::update(float dt)
 					auto bulptr = dynamic_cast<BulletGo*> (*it2);
 					if (bulptr != nullptr && bulptr->isActive() == false)
 					{
-						bulptr->fire(Framework::Instance().getWindow(), plaptr->getPosition());
+						bulptr->fire(Framework::Instance().getWindow(), plaptr->getMuzzlePos());
 						if (++bulcount > 2)
 						{
 							break;
@@ -156,7 +156,7 @@ void SceneDev2::update(float dt)
 			}
 		}
 		auto txtptr = dynamic_cast<TextGo*>(*it);
-		if (txtptr != nullptr&&txtptr->getName()=="Scoreboard")
+		if (txtptr != nullptr && txtptr->getName() == "Scoreboard")
 		{
 			txtptr->setString("Score : " + std::to_string(score));
 		}
@@ -173,7 +173,7 @@ void SceneDev2::update(float dt)
 		if (gameOver != nullptr)
 		{
 			gameOver->setActive(true);
-			gameOver->setString("Game Over! score: "+ std::to_string(score)+"\npress Space to go Main screen");
+			gameOver->setString("Game Over! score: " + std::to_string(score) + "\npress Space to go Main screen");
 		}
 		Framework::Instance().setTimeScale(0.0);
 	}

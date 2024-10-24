@@ -14,7 +14,7 @@ public:
 	void setPosition(const sf::Vector2f& pos) override;
 	void setOrigin(Origins preset) override;
 	void setOrigin(const sf::Vector2f& newOrigin) override;
-	
+	void setScale(const sf::Vector2f& scalevector);
 
 	sf::FloatRect getRect();
 
