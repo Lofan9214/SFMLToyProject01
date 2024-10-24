@@ -6,7 +6,10 @@ protected:
 	enum class movingPattern
 	{
 		straight,
+		wave,
+		circlic,
 	};
+	
 	int score = 0;
 	int difficulty = 0;
 	movingPattern pattern;

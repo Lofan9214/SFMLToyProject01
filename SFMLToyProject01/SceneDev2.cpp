@@ -47,6 +47,9 @@ void SceneDev2::enter()
 
 	Framework::Instance().setTimeScale(1.0);
 	time = 0.f;
+	score = 0;
+	reloadtime = 0;
+	respawntime = 0.f;
 
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/Player2.png");
