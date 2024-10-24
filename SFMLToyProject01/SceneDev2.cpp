@@ -99,59 +99,49 @@ void SceneDev2::update(float dt)
 		return;
 	}
 
-	if (InputMgr::isKeyPressing(sf::Keyboard::D)
-		&& Framework::Instance().getTimeScale() != 0)
+	PlayerGo* playerptr = nullptr;
+	std::vector<DuckGo*> vecDuck;
+	std::vector<BulletGo*> vecBullet;
+	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
-		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+		auto dyncastplayer = dynamic_cast<PlayerGo*> (*it);
+		if (dyncastplayer != nullptr)
 		{
-			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
-			if (ptr1 != nullptr && ptr1->isActive() == true)
-			{
-				ptr1->playerMove(400);
-			}
+			playerptr = dyncastplayer;
+			continue;
+		}
+		auto dyncastDuck = dynamic_cast<DuckGo*> (*it);
+		if (dyncastDuck != nullptr)
+		{
+			vecDuck.push_back(dyncastDuck);
+			continue;
+		}
+		auto dyncastBullet = dynamic_cast<BulletGo*> (*it);
+		if (dyncastBullet != nullptr)
+		{
+			vecBullet.push_back(dyncastBullet);
+			continue;
 		}
 	}
 
-	if (InputMgr::isKeyPressing(sf::Keyboard::A)
-		&& Framework::Instance().getTimeScale() != 0)
+	if (Framework::Instance().getTimeScale() != 0)
 	{
-		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+		if (InputMgr::isKeyPressing(sf::Keyboard::D)
+			&& playerptr != nullptr && playerptr->isActive() == true)
 		{
-			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
-			if (ptr1 != nullptr && ptr1->isActive() == true)
-			{
-				ptr1->playerMove(-400);
-			}
+			playerptr->playerMove(400);
+		}
+		if (InputMgr::isKeyPressing(sf::Keyboard::A)
+			&& playerptr != nullptr && playerptr->isActive() == true)
+		{
+			playerptr->playerMove(-400);
+		}
+		if ((InputMgr::isKeyUp(sf::Keyboard::D) || InputMgr::isKeyUp(sf::Keyboard::A))
+			&& playerptr != nullptr && playerptr->isActive() == true)
+		{
+			playerptr->playerMove(0);
 		}
 	}
-
-	if (InputMgr::isKeyUp(sf::Keyboard::D)
-		&& Framework::Instance().getTimeScale() != 0)
-	{
-		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
-		{
-			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
-			if (ptr1 != nullptr && ptr1->isActive() == true)
-			{
-				ptr1->playerMove(0);
-			}
-		}
-	}
-
-	if (InputMgr::isKeyUp(sf::Keyboard::A)
-		&& Framework::Instance().getTimeScale() != 0)
-	{
-		for (std::list<GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
-		{
-			auto ptr1 = dynamic_cast<PlayerGo*> (*it1);
-			if (ptr1 != nullptr && ptr1->isActive() == true)
-			{
-				ptr1->playerMove(0);
-			}
-		}
-	}
-
-	
 
 	respawntime += dt;
 	reloadtime += dt;
@@ -159,39 +149,34 @@ void SceneDev2::update(float dt)
 	if (respawntime > 5.f)
 	{
 		respawntime = 0.f;
-		for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+		for (auto itduck : vecDuck)
 		{
-			auto ptr2 = dynamic_cast<DuckGo*> (*it2);
-			if (ptr2 != nullptr && ptr2->isActive() == false)
+			if (itduck->isActive() == false)
 			{
-				ptr2->spawn(true);
+				itduck->spawn(true);
 			}
 		}
 	}
 
 	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
-		PlayerGo* playptr = nullptr;
-		std::vector<BulletGo*> vecBul;
-		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
+		if (playerptr != nullptr && vecBullet.size() > 2 && reloadtime > 0.5f)
 		{
-			auto asplaptr = dynamic_cast<PlayerGo*>(*it);
-			auto bulptr = dynamic_cast<BulletGo*> (*it);
-			if (asplaptr != nullptr && asplaptr->isActive() == true)
+			std::vector<BulletGo*> remainBullet;
+			for (auto itBullet : vecBullet)
 			{
-				playptr = asplaptr;
+				if (itBullet->isActive()==false)
+				{
+					remainBullet.push_back(itBullet);
+				}
 			}
-			if (bulptr != nullptr && bulptr->isActive() == false)
+			if (remainBullet.size() > 2)
 			{
-				vecBul.push_back(bulptr);
-			}
-		}
-		if (playptr != nullptr && vecBul.size() > 2 && reloadtime > 0.5f)
-		{
-			reloadtime = 0.f;
-			for (int i = 0;i < 3;++i)
-			{
-				vecBul[i]->fire(Framework::Instance().getWindow(), playptr->getMuzzlePos());
+				reloadtime = 0.f;
+				for (int i = 0;i < 3;++i)
+				{
+					remainBullet[i]->fire(Framework::Instance().getWindow(), playerptr->getMuzzlePos());
+				}
 			}
 		}
 	}
@@ -199,29 +184,52 @@ void SceneDev2::update(float dt)
 #pragma region 충돌 체크
 	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
-		auto bulptr = dynamic_cast<BulletGo*>(*it);
-		if (bulptr != nullptr && bulptr->isActive() == true)
+		std::vector<BulletGo*> curBullet;
+		std::vector<DuckGo*> liveDuck;
+		for (auto itBullet : vecBullet)
 		{
-			for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+			if (itBullet->isActive()==true)
 			{
-				auto ducptr = dynamic_cast<DuckGo*> (*it2);
-				if (ducptr != nullptr && ducptr->isAlive() == true)
-				{
-					if (Utilities::isColliding(bulptr->getRect(), ducptr->getRect()))
-					{
-						bulptr->hit();
-						int upscore = ducptr->hit();
-						score += upscore;
-						time -= upscore * 20;
-						if (time < 0)
-						{
-							time = 0;
-						}
-						break;
-					}
-				}
+				curBullet.push_back(itBullet);
 			}
 		}
+		for (auto itDuck : vecDuck)
+		{
+			if (itDuck->isActive() == true)
+			{
+				liveDuck.push_back(itDuck);
+			}
+		}
+		bool hit = false;
+		for (auto itBullet : curBullet)
+		{
+			for (auto itDuck : liveDuck)
+			{
+				if (itDuck->isAlive() == false
+					|| itBullet->isActive() == false)
+				{
+					break;
+				}
+				if (Utilities::isColliding(itBullet->getRect(), itDuck->getRect()))
+				{
+					itBullet->hit();
+					int upscore = itDuck->hit();
+					score += upscore;
+					time -= upscore * 20;
+					if (time < 0)
+					{
+						time = 0;
+					}
+					hit = true;
+					break;
+				}
+			}
+			if (hit)
+			{
+				break;
+			}
+		}
+
 		auto txtptr = dynamic_cast<TextGo*>(*it);
 		if (txtptr != nullptr && txtptr->getName() == "Scoreboard")
 		{
@@ -233,13 +241,9 @@ void SceneDev2::update(float dt)
 
 	if (score % 100 == 0)
 	{
-		for (std::list<GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+		for (auto itDuck : vecDuck)
 		{
-			auto ducptr = dynamic_cast<DuckGo*> (*it2);
-			if (ducptr != nullptr)
-			{
-				ducptr->setDifficulty(score / 100);
-			}
+			itDuck->setDifficulty(score / 100);
 		}
 	}
 
