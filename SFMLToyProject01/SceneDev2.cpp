@@ -16,13 +16,13 @@ void SceneDev2::init()
 	GameObject* obj;
 	std::cout << "SceneDev2::Init()" << std::endl;
 
-	AddGo(new SpriteGo("graphics/background.png"));
+	AddGo(new SpriteGo("graphics/background2.png"));
 	for (int i = 0; i < 30; ++i)
 	{
 		obj = AddGo(new BulletGo("graphics/Bullet.png", "bullet"));
 		obj->setOrigin(Origins::MC);
 	}
-	AddGo(new PlayerGo("graphics/Head.png", "player"));
+	AddGo(new PlayerGo("graphics/Player2.png", "player"));
 	for (int i = 0; i < 7; ++i)
 	{
 		obj = AddGo(new DuckGo("graphics/duckAll.png", "duck"));
@@ -48,8 +48,8 @@ void SceneDev2::enter()
 	Framework::Instance().setTimeScale(1.0);
 	time = 0.f;
 
-	ResourceMgr<sf::Texture>::Instance().load("graphics/background.png");
-	ResourceMgr<sf::Texture>::Instance().load("graphics/Head.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
+	ResourceMgr<sf::Texture>::Instance().load("graphics/Player2.png");
 	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
 		auto ptr = dynamic_cast<PlayerGo*>(*it);
@@ -80,8 +80,8 @@ void SceneDev2::exit()
 
 	Scene::exit();
 
-	ResourceMgr<sf::Texture>::Instance().unload("graphics/background.png");
-	ResourceMgr<sf::Texture>::Instance().unload("graphics/Head.png");
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/background2.png");
+	ResourceMgr<sf::Texture>::Instance().unload("graphics/Player2.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/Bullet.png");
 	ResourceMgr<sf::Texture>::Instance().unload("graphics/duckAll.png");
 	ResourceMgr<sf::Font>::Instance().unload("fonts/KOMIKAP_.ttf");
