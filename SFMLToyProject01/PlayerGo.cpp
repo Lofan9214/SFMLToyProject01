@@ -30,6 +30,7 @@ void PlayerGo::init()
 
 void PlayerGo::reset()
 {
+	playerspeed = 0;
 	SpriteGo::reset();
 }
 
@@ -45,15 +46,16 @@ void PlayerGo::update(float dt)
 		sprite.setRotation(degr);
 
 		sf::Vector2f pos2 = sprite.getPosition();
-		pos2.x += playerspeed * dt;
-		sprite.setPosition(pos2);
 		if (sprite.getPosition().x >= Framework::Instance().getWindow().getSize().x - sprite.getLocalBounds().width / 2
 			|| sprite.getPosition().x <= 0.f + sprite.getLocalBounds().width / 2)
 		{
-			pos2.x -= playerspeed * dt;
 			playerspeed = 0;
-			sprite.setPosition(pos2);
 		}
+		else
+		{
+			pos2.x += playerspeed * dt;
+		}
+		sprite.setPosition(pos2);
 	}
 
 }
