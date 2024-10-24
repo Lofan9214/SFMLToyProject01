@@ -158,7 +158,7 @@ void SceneDev2::update(float dt)
 						bulptr->hit();
 						int upscore = ducptr->hit();
 						score += upscore;
-						time -= upscore * 15;
+						time -= upscore * 20;
 						if (time < 0)
 						{
 							time = 0;
