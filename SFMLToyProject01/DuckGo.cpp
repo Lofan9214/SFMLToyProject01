@@ -116,7 +116,7 @@ void DuckGo::spawn(bool respawn)
 	{
 		score = 20;
 		speed = difficulty * 100 + Utilities::randFloat(1100.f, 1300.f);
-		sprite.setColor(sf::Color(150, 150, 255, 255));
+		sprite.setColor(sf::Color(255, 255, 100, 255));
 	}
 	else
 	{
