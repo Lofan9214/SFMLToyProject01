@@ -15,6 +15,7 @@ protected:
 	int difficulty = 0;
 	movingPattern pattern;
 	sf::Vector2f velocity;
+	sf::Vector2f displacement;
 
 	float wing = 0.f;
 	float flytime = 0.f;

@@ -22,7 +22,6 @@ void DuckGo::update(float dt)
 	wing += dt;
 	flytime += dt;
 
-	sf::Vector2f displacement(0.f, 0.f);
 	if ((int)pattern > 1)
 	{
 		displacement.y = displacementAmplitude * sinf(displacementPeriod * flytime);
@@ -33,8 +32,8 @@ void DuckGo::update(float dt)
 	}
 	if (pattern == movingPattern::totalyrandom)
 	{
-		displacement.x = displacementAmplitude * sinf(displacementPeriod) * dt;
-		displacement.y = displacementAmplitude * cosf(displacementPeriod) * dt;
+		displacement.x += displacementAmplitude * sinf(displacementPeriod) * dt;
+		displacement.y += displacementAmplitude * cosf(displacementPeriod) * dt;
 	}
 
 
@@ -53,7 +52,7 @@ void DuckGo::update(float dt)
 			}
 			if (pattern == movingPattern::totalyrandom)
 			{
-				displacementAmplitude = Utilities::randFloat(400.f, 800.f);
+				displacementAmplitude = Utilities::randFloat(100.f, 200.f);
 				displacementPeriod = Utilities::randFloat(0.f, 2.f * Utilities::pi);
 			}
 		}
@@ -106,9 +105,9 @@ void DuckGo::spawn(bool respawn)
 	float speed;
 	active = true;
 	bAlive = true;
-	displacementAmplitude = Utilities::randFloat(50.f, 150.f);
+	displacementAmplitude = Utilities::randFloat(100.f, 200.f);
 	displacementPeriod = Utilities::randFloat(1.5f, 4.f);
-
+	displacement = { 0,0 };
 	pattern = (movingPattern)Utilities::randInt(0, 3);
 
 	wing = Utilities::randFloat(0.f, 0.5f);
@@ -128,13 +127,13 @@ void DuckGo::spawn(bool respawn)
 	if (Utilities::randInt(0, 1) == 1)
 	{
 		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
-		position.x = -100;
+		position.x = -200;
 		sprite.setScale(-0.8f, 0.8f);
 	}
 	else
 	{
 		angle = Utilities::randFloat(Utilities::pi * 0.97f, Utilities::pi * 1.03f);
-		position.x = 1920 + 100;
+		position.x = 1920 + 200;
 		sprite.setScale(0.8f, 0.8f);
 	}
 	if (!respawn)
