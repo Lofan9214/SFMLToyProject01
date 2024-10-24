@@ -41,14 +41,13 @@ void DuckGo::update(float dt)
 
 		if (scalex > 0)
 		{
-			setScale({ scalex + scaleDispAmplitude * cosf(displacementPeriod * flytime), scaley + scaleDispAmplitude*cosf(displacementPeriod * flytime) });
+			setScale({ scalex + scaleDispAmplitude * sinf(displacementPeriod * flytime), scaley + scaleDispAmplitude * sinf(displacementPeriod * flytime) });
 		}
 		else
 		{
-			setScale({ -scalex - scaleDispAmplitude * cosf(displacementPeriod * flytime), scaley + scaleDispAmplitude* cosf(displacementPeriod * flytime) });
+			setScale({ scalex - scaleDispAmplitude * sinf(displacementPeriod * flytime), scaley + scaleDispAmplitude * sinf(displacementPeriod * flytime) });
 		}
 	}
-
 
 	if (wing > 0.5)
 	{
