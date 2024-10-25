@@ -35,6 +35,12 @@ sf::Vector2f Utilities::setOrigin(sf::Drawable& obj, Origins preset)
 
 bool Utilities::isColliding(const sf::FloatRect& bullet, const sf::FloatRect& duck)
 {
+	if (bullet.top + bullet.height < 0
+		|| duck.top + duck.height < 0)
+	{
+		return false;
+	}
+
 	if (bullet.left < (duck.left + duck.width)
 		&& bullet.left + bullet.width > duck.left
 		&& bullet.top < (duck.top + duck.height)

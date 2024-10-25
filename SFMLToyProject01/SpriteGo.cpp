@@ -9,6 +9,10 @@ SpriteGo::SpriteGo(const std::string& texId, const std::string& name)
 void SpriteGo::setOrigin(Origins preset)
 {
 	originPreset = preset;
+	if (preset == Origins::Custom)
+	{
+		return;
+	}
 	origin = Utilities::setOrigin(sprite, originPreset);
 }
 
@@ -17,6 +21,11 @@ void SpriteGo::setOrigin(const sf::Vector2f& newOrigin)
 	originPreset = Origins::Custom;
 	origin = newOrigin;
 	sprite.setOrigin(origin);
+}
+
+void SpriteGo::setScale(const sf::Vector2f& scalevector)
+{
+	sprite.setScale(scalevector);
 }
 
 sf::FloatRect SpriteGo::getRect()
@@ -56,4 +65,14 @@ void SpriteGo::draw(sf::RenderWindow& window)
 {
 	GameObject::draw(window);
 	window.draw(sprite);
+}
+
+sf::IntRect SpriteGo::getTextureRect() const
+{
+	return sprite.getTextureRect();
+}
+
+void SpriteGo::setTextureRect(const sf::IntRect& texturect)
+{
+	sprite.setTextureRect(texturect);
 }

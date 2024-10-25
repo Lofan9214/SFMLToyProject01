@@ -9,6 +9,10 @@ TextGo::TextGo(const std::string& iFontId, const std::string& iName)
 void TextGo::setOrigin(Origins iPreset)
 {
 	originPreset = iPreset;
+	if (iPreset == Origins::Custom)
+	{
+		return;
+	}
 	origin = Utilities::setOrigin(txtText,iPreset);
 }
 
@@ -39,6 +43,8 @@ void TextGo::release()
 void TextGo::reset()
 {
 	txtText.setFont(ResourceMgr<sf::Font>::Instance().get(strFontId));
+	txtText.setCharacterSize(50);
+	
 	if (originPreset != Origins::Custom)
 	{
 		setOrigin(originPreset);

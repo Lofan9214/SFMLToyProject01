@@ -5,6 +5,7 @@ class SceneDev1 :
     public Scene
 {
 protected:
+    float acttime;
 public:
     SceneDev1();
     ~SceneDev1() = default;

@@ -2,15 +2,20 @@
 class PlayerGo : public SpriteGo
 {
 protected:
-	sf::Sprite gun;
-	std::string guntextureid;
-	std::string bullettexturid;
-	//std::vector<BulletGo> bullets;
-
+	float playerspeed = 0.f;
+	sf::Sound gunsound;
+	bool fireClick;
 public:
 	PlayerGo() = default;
 	virtual ~PlayerGo() = default;
 	PlayerGo(std::string playerid, std::string name);
+
+	sf::Vector2f getMuzzlePos() const;
+	void playGunsound(std::string soundId);
+
+	void setfireClick(bool fC);
+
+	float playerMove(float speed);
 
 	void init() override;
 	void reset() override;

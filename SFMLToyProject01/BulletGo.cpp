@@ -32,16 +32,16 @@ void BulletGo::reset()
 {
 	SpriteGo::reset();
 	active = false;
-	sprite.setScale(0.4f, 0.4f);
+	sprite.setScale(0.5f, 0.5f);
 }
 
 void BulletGo::fire(sf::RenderWindow& window, const sf::Vector2f& playerpos)
 {
 	auto mousepos = InputMgr::getMousePosition(window);
 	float angle = atan2f(mousepos.y - playerpos.y, mousepos.x - playerpos.x) + Utilities::randFloat(-Utilities::pi * 0.01f, Utilities::pi * 0.01f);
-	float spd = 1200 + Utilities::randFloat(-20.f, 20.f);
-	Velocity.x = spd * cosf(angle);
-	Velocity.y = spd * sinf(angle);
+	float spd = difficulty * 150 + 1500 + Utilities::randFloat(-40.f, 40.f);
+	Velocity.x = -spd / tanf(angle);
+	Velocity.y = -spd;
 	position = playerpos;
 	active = true;
 }
