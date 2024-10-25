@@ -214,10 +214,6 @@ void SceneDev2::update(float dt)
 					break;
 				}
 			}
-			if (hit)
-			{
-				break;
-			}
 		}
 
 		auto txtptr = dynamic_cast<TextGo*>(*it);
