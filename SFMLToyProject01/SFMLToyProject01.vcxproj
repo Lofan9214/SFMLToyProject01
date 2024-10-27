@@ -146,7 +146,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BulletGo.cpp" />
+    <ClCompile Include="BulletMgr.cpp" />
     <ClCompile Include="DuckGo.cpp" />
+    <ClCompile Include="DuckMgr.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -166,7 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletGo.h" />
+    <ClInclude Include="BulletMgr.h" />
     <ClInclude Include="DuckGo.h" />
+    <ClInclude Include="DuckMgr.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="GameObject.h" />

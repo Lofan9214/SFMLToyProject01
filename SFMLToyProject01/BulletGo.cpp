@@ -46,11 +46,25 @@ void BulletGo::fire(sf::RenderWindow& window, const sf::Vector2f& playerpos)
 	active = true;
 }
 
-int BulletGo::hit()
+int BulletGo::checkHit(std::list<DuckGo*> aliveDuck)
 {
-	active = false;
-	position.x = -1000;
-	position.y = -1000;
-	sprite.setPosition(position);
-	return 0;
+	int score = 0;
+	for (auto itDuck : aliveDuck)
+	{
+		if (Utilities::isColliding(getRect(), itDuck->getRect()))
+		{
+			active = false;
+			position.x = -1000;
+			position.y = -1000;
+			sprite.setPosition(position);
+
+			score = itDuck->hit();
+			itDuck->playSoundDuckDie("sound/chicken5.wav");
+		}
+		if (active == false)
+		{
+			break;
+		}
+	}
+	return score;
 }

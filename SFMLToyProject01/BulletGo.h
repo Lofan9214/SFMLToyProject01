@@ -1,13 +1,17 @@
 #pragma once
+#include "DuckGo.h"
+
 class BulletGo : public SpriteGo
 {
 protected:
 	sf::Vector2f Velocity;
-	float rotation=0.f;
-	int difficulty=0;
+	int difficulty = 0;
+
+	BulletGo(const BulletGo&) = delete;
+	BulletGo& operator=(const BulletGo&) = delete;
 
 public:
-	BulletGo() = default;
+	//BulletGo() = default;
 	virtual ~BulletGo() = default;
 	BulletGo(std::string texid, std::string name);
 
@@ -18,6 +22,6 @@ public:
 	void reset() override;
 	void fire(sf::RenderWindow& window, const sf::Vector2f& playerpos);
 
-	int hit();
+	int checkHit(std::list<DuckGo*> aliveDuck);
 };
 

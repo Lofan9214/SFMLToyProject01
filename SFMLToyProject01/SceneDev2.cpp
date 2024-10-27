@@ -2,12 +2,10 @@
 #include "SceneDev2.h"
 #include "SpriteGo.h"
 #include "PlayerGo.h"
-#include "BulletGo.h"
-#include "DuckGo.h"
 #include "TextGo.h"
 
 SceneDev2::SceneDev2()
-	: Scene(SceneIds::Dev2), gameOver(nullptr)
+	: Scene(SceneIds::Dev2), gameOver(nullptr), bulletMgr(15), duckMgr(10)
 {
 }
 
@@ -23,26 +21,15 @@ void SceneDev2::init()
 	groundGo->setPosition({ 0.f, (float)Framework::Instance().getWindow().getSize().y });
 	AddGo(groundGo);
 
+	auto lstbullet = bulletMgr.getBulletGoList();
+	gameObjects.insert(gameObjects.end(), lstbullet.begin(), lstbullet.end());
 
-	for (int i = 0; i < 15; ++i)
-	{
-		BulletGo* tmp = new BulletGo("graphics/Bullet.png", "bullet");
-		AddGo(tmp);
-		tmp->setOrigin(Origins::MC);
-		vecBullet.push_back(tmp);
-		vecBulletLoaded.push_back(tmp);
-	}
 	playerGo = new PlayerGo("graphics/Player2.png", "player");
 	AddGo(playerGo);
 
-	for (int i = 0; i < 10; ++i)
-	{
-		DuckGo* tmp = new DuckGo("graphics/duckAll.png", "duck");
-		AddGo(tmp);
-		tmp->setOrigin(Origins::MC);
-		vecDuck.push_back(tmp);
-		vecDuckAlive.push_back(tmp);
-	}
+	auto lstduck = duckMgr.getDuckGoList();
+	gameObjects.insert(gameObjects.end(), lstduck.begin(), lstduck.end());
+
 	textScore = new TextGo("fonts/KOMIKAP_.ttf", "Scoreboard");
 
 	AddGo(textScore);
@@ -64,9 +51,6 @@ void SceneDev2::enter()
 	Framework::Instance().setTimeScale(1.0);
 	time = 0.f;
 	score = 0;
-	reloadtime = 0;
-	respawntime = 0.f;
-
 
 	ResourceMgr<sf::Texture>::Instance().load("graphics/underbackground.png");
 	ResourceMgr<sf::Texture>::Instance().load("graphics/background2.png");
@@ -112,9 +96,10 @@ void SceneDev2::update(float dt)
 		return;
 	}
 
-	respawntime += dt;
-	reloadtime += dt;
 	time += 192.0f * dt;
+
+	duckMgr.update(dt);
+	bulletMgr.update(dt);
 
 	if (Framework::Instance().getTimeScale() != 0)
 	{
@@ -132,38 +117,9 @@ void SceneDev2::update(float dt)
 		}
 	}
 
-	if (respawntime > 5.f)
-	{
-		respawntime = 0.f;
-		for (auto itduck : vecDuck)
-		{
-			itduck->spawn(true);
-		}
-	}
-
 	if (InputMgr::isMouseButtonDown(sf::Mouse::Left))
 	{
-		if (reloadtime > 0.5f)
-		{
-			std::vector<BulletGo*> remainBullet;
-			for (auto itBullet : vecBullet)
-			{
-				if (itBullet->isActive() == false)
-				{
-					remainBullet.push_back(itBullet);
-				}
-			}
-			if (remainBullet.size() > 2)
-			{
-				reloadtime = 0.f;
-				for (int i = 0;i < 3;++i)
-				{
-					remainBullet[i]->fire(Framework::Instance().getWindow(), playerGo->getMuzzlePos());
-				}
-				playerGo->playGunsound("sound/Bernice_Skill01_Fire.wav");
-				playerGo->setfireClick(true);
-			}
-		}
+		bulletMgr.fire(playerGo);
 	}
 	if (InputMgr::isMouseButtonUp(sf::Mouse::Left))
 	{
@@ -171,66 +127,19 @@ void SceneDev2::update(float dt)
 	}
 
 #pragma region 面倒 眉农
-	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
-	{
-		std::vector<BulletGo*> curBullet;
-		std::vector<DuckGo*> liveDuck;
-		for (auto itBullet : vecBullet)
-		{
-			if (itBullet->isActive() == true)
-			{
-				curBullet.push_back(itBullet);
-			}
-		}
-		for (auto itDuck : vecDuck)
-		{
-			if (itDuck->isActive() == true)
-			{
-				liveDuck.push_back(itDuck);
-			}
-		}
-		bool hit = false;
-		for (auto itBullet : curBullet)
-		{
-			for (auto itDuck : liveDuck)
-			{
-				if (itDuck->isAlive() == false
-					|| itBullet->isActive() == false)
-				{
-					break;
-				}
-				if (Utilities::isColliding(itBullet->getRect(), itDuck->getRect()))
-				{
-					itBullet->hit();
-					int upscore = itDuck->hit();
-					score += upscore;
-					time -= upscore * 20;
-					if (time < 0)
-					{
-						time = 0;
-					}
-					hit = true;
-					itDuck->playSoundDuckDie("sound/chicken5.wav");
-					break;
-				}
-			}
-		}
 
-		auto txtptr = dynamic_cast<TextGo*>(*it);
-		if (txtptr != nullptr && txtptr->getName() == "Scoreboard")
-		{
-			txtptr->setString("Score : " + std::to_string(score));
-		}
-	}
+	int upscore = bulletMgr.checkHit(duckMgr);
+	score += upscore;
+	time -= upscore * 20;
+	textScore->setString("Score : " + std::to_string(score));
+
 #pragma endregion 面倒 眉农
 
 
 	if (score % 100 == 0)
 	{
-		for (auto itDuck : vecDuck)
-		{
-			itDuck->setDifficulty(score / 100);
-		}
+		duckMgr.setDifficulty(score / 100);
+		bulletMgr.setDifficulty(score / 100);
 	}
 
 

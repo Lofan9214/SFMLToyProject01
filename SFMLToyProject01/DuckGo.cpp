@@ -184,7 +184,7 @@ void DuckGo::spawn(bool respawn)
 int DuckGo::hit()
 {
 	bAlive = false;
-	wing = 0;
+	wing = 0.f;
 	sf::IntRect intrec = sprite.getTextureRect();
 	intrec.top += intrec.height;
 	intrec.left = 0;

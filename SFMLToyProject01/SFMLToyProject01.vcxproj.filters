@@ -46,6 +46,12 @@
     <ClCompile Include="Utilities.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="DuckMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -97,6 +103,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DuckMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMgr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
