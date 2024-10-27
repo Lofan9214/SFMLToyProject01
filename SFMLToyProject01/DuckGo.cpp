@@ -28,6 +28,18 @@ void DuckGo::update(float dt)
 	wing += dt;
 	flytime += dt;
 
+	if (pattern == movingPattern::totalyrandom)
+	{
+		randompatterntime += dt;
+		if (randompatterntime > 1.f)
+		{
+			randompatterntime = 0.f;
+			setRandomPattern();
+		}
+	}
+
+	doAnimation();
+
 	if (bAlive == true)
 	{
 		if ((int)pattern > 1)
@@ -52,35 +64,6 @@ void DuckGo::update(float dt)
 		{
 			setScale({ scalex - scaleDispAmplitude * sinf(displacementPeriod * flytime), scaley + scaleDispAmplitude * sinf(displacementPeriod * flytime) });
 		}
-	}
-
-	if (wing > 0.5)
-	{
-		sf::IntRect intrec = sprite.getTextureRect();
-		if (bAlive)
-		{
-			if (intrec.left > 0)
-			{
-				intrec.left = 0;
-			}
-			else
-			{
-				intrec.left += intrec.width;
-			}
-			if (pattern == movingPattern::totalyrandom)
-			{
-				displacementAmplitude = Utilities::randFloat(100.f, 200.f);
-				displacementPeriod = Utilities::randFloat(0.f, 2.f * Utilities::pi);
-			}
-		}
-		else
-		{
-			active = false;
-			intrec.top = 0;
-			position.x = -1000.f;
-		}
-		sprite.setTextureRect(intrec);
-		wing = 0;
 	}
 
 	if ((position.x < (-500) || position.x>(Framework::Instance().getWindow().getSize().x + 500)
@@ -171,6 +154,43 @@ void DuckGo::spawn(bool respawn)
 	position.y = Utilities::randInt(150, 400);
 	velocity.x = speed * cosf(angle);
 	velocity.y = speed * sinf(angle);
+}
+
+void DuckGo::doAnimation()
+{
+	if (wing > 0.5)
+	{
+		sf::IntRect intrec = sprite.getTextureRect();
+		if (bAlive)
+		{
+			if (intrec.left > 0)
+			{
+				intrec.left = 0;
+			}
+			else
+			{
+				intrec.left += intrec.width;
+			}
+			
+		}
+		else
+		{
+			active = false;
+			intrec.top = 0;
+			position.x = -1000.f;
+		}
+		sprite.setTextureRect(intrec);
+		wing = 0.f;
+	}
+}
+
+void DuckGo::setRandomPattern()
+{
+	if (pattern == movingPattern::totalyrandom)
+	{
+		displacementAmplitude = Utilities::randFloat(100.f, 200.f);
+		displacementPeriod = Utilities::randFloat(0.f, 2.f * Utilities::pi);
+	}
 }
 
 int DuckGo::hit()

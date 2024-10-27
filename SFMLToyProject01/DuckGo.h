@@ -19,6 +19,7 @@ protected:
 
 	float wing = 0.f;
 	float flytime = 0.f;
+	float randompatterntime = 0.f;
 	float displacementAmplitude = 0.f;
 	float displacementPeriod = 0.f;
 
@@ -50,6 +51,9 @@ public:
 	void draw(sf::RenderWindow& window) override;
 
 	void spawn(bool respawn = false);
+
+	void doAnimation();
+	void setRandomPattern();
 
 	void setDifficulty(int dDif) { difficulty = dDif; }
 	int hit();
