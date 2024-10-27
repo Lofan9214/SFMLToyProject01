@@ -42,12 +42,11 @@ void DuckMgr::update(float dt)
 
 	if (respawntime > 3.f)
 	{
+		respawntime = 0.f;
 		for (auto rit = lstDeadDuck.rbegin();rit != lstDeadDuck.rend();++rit)
 		{
 			if ((*rit)->isActive() == false)
 			{
-				respawntime = 0.f;
-
 				(*rit)->spawn(true);
 
 				lstAliveDuck.push_back(*rit);

@@ -19,7 +19,6 @@ void DuckGo::playSoundDuckDie(std::string duckdie)
 
 void DuckGo::init()
 {
-	active = false;
 	spawn();
 }
 
@@ -84,11 +83,10 @@ void DuckGo::update(float dt)
 		wing = 0;
 	}
 
-	if ((position.x < (-200) || position.x>(Framework::Instance().getWindow().getSize().x + 200)
-		|| position.y < (-200) || position.y>(Framework::Instance().getWindow().getSize().y + 200))
+	if ((position.x < (-500) || position.x>(Framework::Instance().getWindow().getSize().x + 500)
+		|| position.y < (-500) || position.y>(Framework::Instance().getWindow().getSize().y + 500))
 		&& bAlive)
 	{
-		active = false;
 		spawn(true);
 	}
 
@@ -106,7 +104,6 @@ void DuckGo::reset()
 	SpriteGo::reset();
 	sf::IntRect frame = sf::IntRect(0, 0, 140, 95);
 	sprite.setTextureRect(frame);
-	active = false;
 	wing = Utilities::randFloat(0.f, 0.5f);
 
 	spawn();
@@ -119,10 +116,6 @@ void DuckGo::release()
 
 void DuckGo::spawn(bool respawn)
 {
-	if (active == true)
-	{
-		return;
-	}
 	score = 0;
 	flytime = 0.f;
 	float speed;
@@ -157,18 +150,17 @@ void DuckGo::spawn(bool respawn)
 		speed = difficulty * 100 + Utilities::randFloat(600.f, 800.f);
 		sprite.setColor(sf::Color::White);
 	}
-	
 
 	if (Utilities::randInt(0, 1) == 1)
 	{
 		angle = Utilities::randFloat(-Utilities::pi * 0.03f, Utilities::pi * 0.03f);
-		position.x = -200;
+		position.x = -400;
 		scalex = -scaley;
 	}
 	else
 	{
 		angle = Utilities::randFloat(Utilities::pi * 0.97f, Utilities::pi * 1.03f);
-		position.x = 1920 + 200;
+		position.x = Framework::Instance().getWindow().getSize().x + 400;
 		scalex = scaley;
 	}
 	sprite.setScale(scalex, scaley);
@@ -191,7 +183,6 @@ int DuckGo::hit()
 	sprite.setTextureRect(intrec);
 	velocity.x = 0;
 	velocity.y = 300;
-
 
 	return score;
 }
