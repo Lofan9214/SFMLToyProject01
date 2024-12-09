@@ -37,7 +37,7 @@ float PlayerGo::playerMove(float speed)
 
 void PlayerGo::init()
 {
-	
+
 }
 
 void PlayerGo::reset()
@@ -46,8 +46,8 @@ void PlayerGo::reset()
 	SpriteGo::reset();
 	sf::IntRect tmp;
 	tmp.left = 0;
-	tmp.width = sprite.getTexture()->getSize().x /2;
-	tmp.top= 0;
+	tmp.width = sprite.getTexture()->getSize().x / 2;
+	tmp.top = 0;
 	tmp.height = sprite.getTexture()->getSize().y;
 	sprite.setTextureRect(tmp);
 
@@ -59,9 +59,11 @@ void PlayerGo::update(float dt)
 	{
 
 		auto mousepos = InputMgr::getMousePosition(Framework::Instance().getWindow());
-		float radi = atan2f(mousepos.y - position.y, mousepos.x - position.x);
+		sf::Vector2f mouseposf = Framework::Instance().getWindow().mapPixelToCoords(mousepos);
+		float radi = atan2f(mouseposf.y - position.y, mouseposf.x - position.x);
 		float degr = Utilities::rad2deg(radi) + 90;
 
+		
 		sprite.setRotation(degr);
 
 		sf::Vector2f pos2 = sprite.getPosition();
